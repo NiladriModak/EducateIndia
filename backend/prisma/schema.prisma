@@ -1,0 +1,220 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       String @id @default(cuid()) @map("_id")
+  name     String
+  email    String @unique
+  password String
+}
+
+model Teacher {
+  id         String                @id @default(cuid()) @map("_id")
+  name       String
+  email      String                @unique
+  password   String
+  students   TeacherStudent[]
+  allDetails TeacherSubjectClass[]
+  notes      Notes[]
+  Videos     Videos[]
+  test Test[]
+  announcement Announcement[]
+}
+
+model Class {
+  id         String                @id @default(cuid()) @map("_id")
+  name       String                @unique
+  students   StudentInClass[]
+  allDetails TeacherSubjectClass[]
+  notes      Notes[]
+  Videos     Videos[]
+  test Test[]
+  announcement Announcement[]
+}
+
+// model ClassTeacher {
+//   id        String  @id @default(cuid()) @map("_id")
+//   class     Class   @relation(fields: [classId], references: [id])
+//   classId   String
+//   teacher   Teacher @relation(fields: [teacherId], references: [id])
+//   teacherId String
+
+//   @@unique([classId, teacherId])
+// }
+
+model Student {
+  id       String           @id @default(cuid()) @map("_id")
+  name     String
+  email    String           @unique
+  password String
+  classes  StudentInClass[]
+  teachers TeacherStudent[]
+  answers Answer[]
+  TotalIndivisualMarks StudentTest[]
+}
+
+model StudentInClass {
+  id        String  @id @default(cuid()) @map("_id")
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId String
+  class     Class   @relation(fields: [classId], references: [id])
+  classId   String
+
+  @@unique([studentId, classId])
+}
+
+model TeacherStudent {
+  id        String  @id @default(cuid()) @map("_id")
+  student   Student @relation(fields: [studentId], references: [id])
+  studentId String
+  teacher   Teacher @relation(fields: [teacherId], references: [id])
+  teacherId String
+
+  @@unique([studentId, teacherId])
+}
+
+model Subject {
+  id          String                @id @default(cuid()) @map("_id")
+  subjectName String                @unique
+  allDetails  TeacherSubjectClass[]
+  notes       Notes[]
+  Videos      Videos[]
+  test  Test[]
+  announcement Announcement[]
+}
+
+model TeacherSubjectClass {
+  id        String  @id @default(cuid()) @map("_id")
+  teacher   Teacher @relation(fields: [teacherId], references: [id])
+  teacherId String
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  subjectId String
+  class     Class   @relation(fields: [classId], references: [id])
+  classId   String
+
+  @@unique([classId, teacherId, subjectId])
+}
+
+model Notes {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  description String
+  date        DateTime
+  createdBy   Teacher  @relation(fields: [teacherId], references: [id])
+  teacherId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  subjectId   String
+  class       Class    @relation(fields: [classId], references: [id])
+  classId     String
+  pdfData     Json
+}
+
+model Videos {
+  id          String   @id @default(cuid()) @map("_id")
+  name        String
+  date        DateTime
+  description String
+  createdBy   Teacher  @relation(fields: [teacherId], references: [id])
+  teacherId   String
+  subject     Subject  @relation(fields: [subjectId], references: [id])
+  subjectId   String
+  class       Class    @relation(fields: [classId], references: [id])
+  classId     String
+  url         String
+}
+
+
+
+model Payment {
+  id                  String  @id @default(cuid()) @map("_id")
+  name                String
+  email               String  @unique
+  PaymentStatus       Boolean
+  razorpay_payment_id String
+  razorpay_order_id   String
+  razorpay_signature  String
+}
+
+model Test {
+  id          String    @id @default(cuid()) @map("_id")
+  description String
+  title       String
+  teacher     Teacher   @relation(fields: [teacherId], references: [id])
+  teacherId   String
+  subject     Subject   @relation(fields: [subjectId], references: [id])
+  subjectId   String
+  class       Class     @relation(fields: [classId], references: [id])
+  classId     String
+  date        DateTime
+  duration      Float
+  questions   Question[]
+  answers Answer[]
+  TotalIndivisualMarks StudentTest[]
+
+}
+model Question {
+  id       String  @id @default(cuid()) @map("_id")
+  text     String
+  test     Test    @relation(fields: [testId], references: [id])
+  testId   String
+  answers Answer[]
+  options String[]
+  correctAnswer Int?
+  marks Float
+}
+
+model Answer{
+  id String @id @default(cuid()) @map("_id")
+  test Test @relation(fields:[testId],references:[id])
+  testId String
+  question Question @relation(fields:[questionId],references:[id])
+  questionId String
+  student Student @relation(fields:[studentId],references:[id])
+  studentId String
+  givenAnswer Int
+  obtainedMarks Float
+}
+
+model Announcement{
+  id String      @id @default(cuid()) @map("_id")
+  heading        String
+  content        String
+  createdBy      Teacher @relation(fields:[teacherId], references:[id])
+  teacherId           String
+  class           Class @relation(fields:[classId],references:[id])
+  classId           String
+  subject               Subject   @relation(fields: [subjectId], references: [id])
+  subjectId             String
+  date                  DateTime @default(now())
+}
+
+model TeacherPending{
+  id         String                @id @default(cuid()) @map("_id")
+  name       String
+  email      String                @unique
+  password   String
+  isConfirmed Boolean
+}
+
+model StudentTest{
+  id String @id @default(cuid()) @map("_id")
+  student Student @relation(fields:[studentId],references:[id])
+  test Test @relation(fields:[testId],references:[id])
+  testId String
+  studentId String 
+  totalMarks Float
+  fullMarks Float
+  @@unique([studentId, testId])
+}

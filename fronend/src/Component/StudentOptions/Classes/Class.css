@@ -1,0 +1,73 @@
+.MainDiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 0;
+  background-color: rgb(255, 255, 255);
+}
+
+.SideBar {
+  background-color: rgb(255, 255, 255);
+  width: 22%;
+  box-shadow: 1px 1px 1px 1px rgba(154, 154, 154, 0.693);
+  overflow: auto;
+}
+
+.AccountDiv {
+  background-color: rgba(248, 248, 248, 0.849);
+  width: 80%;
+  box-shadow: "5px 10px 18px #888888";
+  color: black;
+}
+
+@media screen and (max-width: 700px) {
+  .MainDiv {
+    flex-direction: column;
+  }
+
+  .SideBar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .AccountDiv {
+    width: 100%;
+  }
+}
+.ClassDiv1 {
+  width: 15vmax;
+  margin: 2vmax;
+  background-color: rgb(255, 255, 255);
+  /* background-image: url("/sideBarWood.jpg"); */
+  /* background-size: cover; */
+  color: rgb(3, 3, 3);
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2vmax;
+  font-weight: 900;
+  box-shadow: 1px 1px 1px 1px rgb(210, 209, 209);
+  border-radius: 5%;
+  cursor: pointer;
+  padding: "2vmax";
+  transition: transform 0.3s ease-in;
+  overflow-x: hidden;
+}
+.ClassDiv1:hover {
+  /* background-color: rgb(209, 207, 207); */
+  color: black;
+  transform: translateY(-6px);
+}
+@media screen and (max-width: 700px) {
+  .ClassDiv1 {
+    width: 25vmax;
+    margin: 3vmax;
+    height: fit-content;
+  }
+}

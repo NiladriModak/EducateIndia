@@ -1,0 +1,36 @@
+.SubjectDiv {
+  width: 15vmax;
+  margin: 2vmax;
+  background-color: rgb(255, 255, 255);
+  /* background-image: url("/sideBarWood.jpg");
+  background-size: cover; */
+  color: rgb(3, 3, 3);
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  text-align: center;
+  font-size: 1.2vmax;
+  font-weight: bold;
+  box-shadow: 1px 1px 1px 1px rgb(210, 209, 209);
+  border-radius: 5%;
+  cursor: pointer;
+  padding: "2vmax";
+  transition: transform 0.3s ease-in;
+}
+
+.SubjectDiv:hover {
+  color: black;
+  transform: translateY(-6px);
+}
+
+@media screen and (max-width: 700px) {
+  .SubjectDiv {
+    width: 25vmax;
+    margin: 3vmax;
+    height: fit-content;
+    font-size: medium;
+  }
+}

@@ -1,0 +1,54 @@
+.MainContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  /* background-color: aqua; */
+  flex-direction: column;
+  background-color: #ffffff;
+  /* color: white; */
+}
+.Container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* color: white; */
+}
+.first {
+  width: 50%;
+  /* background-color: rgb(66, 157, 209); */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: rgb(0, 74, 139);
+}
+.second {
+  width: 50%;
+  /* background-image: url("https://theacasdemicinsights.com/wp-content/uploads/2021/10/education-in-21st-century.jpeg"); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-left: 1px solid green;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  border-radius: 100%;
+  width: 5vmax;
+}
+.Homeheader > h3 {
+  cursor: pointer;
+  font-weight: 500;
+}
+.RegisterBox > h2 {
+  margin: 15px 0 0 0;
+}
+.options {
+  display: flex;
+  justify-content: space-between;
+}
+.options > p {
+  cursor: pointer;
+  color: blue;
+}
