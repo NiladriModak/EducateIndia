@@ -921,3 +921,58 @@ exports.getDetailsOfTeacher = async (req, res, next) => {
     next(new errorHandler(error, 400));
   }
 };
+
+exports.getAllClassDetails = async (req, res, next) => {
+  try {
+    const data = await prisma.TeacherSubjectClass.findMany({
+      include: {
+        teacher: true,
+        subject: true,
+        class: true,
+      },
+    });
+    const uniqueClasses = new Set();
+    const subjectByClass = {};
+    const teacherByClass = {};
+    const classDetails = {};
+    data?.forEach((record) => {
+      const classid = record?.class?.id;
+      const className = record?.class?.name;
+      const subjectName = record?.subject?.subjectName;
+      const teacherName = record?.teacher?.name;
+      uniqueClasses.add(classid);
+      // console.log(uniqueClasses);
+      if (!subjectByClass[classid]) {
+        subjectByClass[classid] = new Set();
+      }
+      subjectByClass[classid].add(subjectName);
+      if (!teacherByClass[classid]) {
+        teacherByClass[classid] = new Set();
+      }
+      teacherByClass[classid].add(teacherName);
+      if (!classDetails[classid]) {
+        classDetails[classid] = new Set();
+      }
+      classDetails[classid].add(className);
+    });
+    for (const sc in subjectByClass) {
+      subjectByClass[sc] = Array.from(subjectByClass[sc]);
+    }
+    for (const sc in teacherByClass) {
+      teacherByClass[sc] = Array.from(teacherByClass[sc]);
+    }
+    for (const sc in classDetails) {
+      classDetails[sc] = Array.from(classDetails[sc]);
+    }
+    // console.log(uniqueClasses);
+    res.status(200).json({
+      uniqueClasses: Array.from(uniqueClasses),
+      subjectByClass,
+      teacherByClass,
+      classDetails,
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

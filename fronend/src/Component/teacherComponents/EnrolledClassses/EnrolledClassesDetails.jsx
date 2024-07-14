@@ -50,7 +50,7 @@ function EnrolledClassesDetails() {
               display: "flex",
               flexWrap: "wrap",
               width: "100%",
-              justifyContent: "flex-start",
+              justifyContent: "center",
               alignItems: "center",
             }}
           >

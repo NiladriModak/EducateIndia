@@ -3,6 +3,9 @@ import {
   CREATE_ANSWERS_REQUEST,
   CREATE_ANSWERS_SUCCESS,
   FAIL_CLASSID,
+  GET_ALL_CLASS_DETAILS_FAIL,
+  GET_ALL_CLASS_DETAILS_REQUEST,
+  GET_ALL_CLASS_DETAILS_SUCCESS,
   GET_ALL_TEST_MARKS_FAIL,
   GET_ALL_TEST_MARKS_REQUEST,
   GET_ALL_TEST_MARKS_SUCCESS,
@@ -271,6 +274,27 @@ export const getAllTestMarksReducer = (
         allTestMarks: action.payload,
       };
     case GET_ALL_TEST_MARKS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const getClassDetails = (state = { classDetails: {} }, action) => {
+  switch (action.type) {
+    case GET_ALL_CLASS_DETAILS_REQUEST:
+      return {
+        loading: true,
+      };
+    case GET_ALL_CLASS_DETAILS_SUCCESS:
+      return {
+        loading: false,
+        classDetails: action.payload,
+      };
+    case GET_ALL_CLASS_DETAILS_FAIL:
       return {
         loading: false,
         error: action.payload,

@@ -119,7 +119,7 @@ function TeacherDashboard() {
                   style={{
                     width: "15vmax",
                   }}
-                  src="/books.png"
+                  src="/teacher2.png"
                   alt="profile"
                 />
               </div>

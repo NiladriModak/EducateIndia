@@ -7,6 +7,7 @@ function SubjectDiv(props) {
   const navigator = useNavigate();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.subjects);
+
   const { classId } = useParams();
   const handleClick = async (id) => {
     try {
@@ -24,7 +25,7 @@ function SubjectDiv(props) {
         <div
           style={{
             display: "flex",
-            justifyContent: "flexStart",
+            justifyContent: "center",
             alignItems: "center",
             // backgroundColor: "blue",
           }}
@@ -34,10 +35,9 @@ function SubjectDiv(props) {
             onClick={() => handleClick(props.subject.id)}
           >
             <div>
-              <img src="/Books.webp" style={{ width: "70px" }}></img>
+              <img src="/Books.webp" style={{ width: "100%" }}></img>
             </div>
-            <div>{props.subject.subjectName} </div>
-            <div>Students: Teachers:</div>
+            <h2>{props.subject.subjectName} </h2>
           </div>
         </div>
       )}

@@ -7,6 +7,7 @@ import {
   createAnswer,
   getAllTestMarksReducer,
   getAnnouncements,
+  getClassDetails,
   getQuestions,
   getSingleTest,
   getStudentTest,
@@ -53,6 +54,7 @@ const reducers = combineReducers({
   allScholarships: getScholarship,
   allBooks: getBooks,
   allDetails: getAllDetails,
+  classDetails: getClassDetails,
 });
 
 // Define initial state for the store (currently empty)

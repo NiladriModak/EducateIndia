@@ -5,6 +5,9 @@ import {
   CREATE_ANSWERS_REQUEST,
   CREATE_ANSWERS_SUCCESS,
   FAIL_CLASSID,
+  GET_ALL_CLASS_DETAILS_FAIL,
+  GET_ALL_CLASS_DETAILS_REQUEST,
+  GET_ALL_CLASS_DETAILS_SUCCESS,
   GET_ALL_TEST_MARKS_FAIL,
   GET_ALL_TEST_MARKS_REQUEST,
   GET_ALL_TEST_MARKS_SUCCESS,
@@ -330,6 +333,26 @@ export const getAllTestMarks = (studentId) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: GET_ALL_TEST_MARKS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const getClassDetails = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_ALL_CLASS_DETAILS_REQUEST });
+    const token = localStorage.getItem("token");
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/getallClassDetails`, config);
+    dispatch({ type: GET_ALL_CLASS_DETAILS_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_CLASS_DETAILS_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -26,7 +26,7 @@ function TeacherDiv(props) {
           <div className="ClassDiv1">
             {props.teacher.name}
 
-            <img src="/teacher1.png" style={{ width: "90px" }}></img>
+            <img src="/teacher1.png" style={{ width: "100%" }}></img>
             <div className="teacherButtons">
               <Button
                 color="success"

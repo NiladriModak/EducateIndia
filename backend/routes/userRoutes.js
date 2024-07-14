@@ -25,6 +25,7 @@ const {
   getMarksOfAllGivenTest,
   getJob,
   getScholarships,
+  getAllClassDetails,
 } = require("../controllers/Classes/class");
 const { isAuth } = require("../middlewires/auth");
 
@@ -81,4 +82,5 @@ router
 router.route("/student/:studentId/getTestMarks").get(getMarksOfAllGivenTest);
 router.route("/getJobs").get(isAuth, getJob);
 router.route("/getScholarships").get(isAuth, getScholarships);
+router.route("/getallClassDetails").get(isAuth, getAllClassDetails);
 module.exports = router;

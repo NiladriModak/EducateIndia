@@ -21,7 +21,7 @@ function EnrolledClassesDiv(props) {
         >
           <div className="ClassDiv1" style={{ borderRadius: "5%" }}>
             <div>
-              <img src="/pencil.png" style={{ width: "100%" }}></img>
+              <img src="/classroom.png" style={{ width: "100%" }}></img>
             </div>
             <div>{props.class.class.name}</div>
             <div>
