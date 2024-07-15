@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import { Button, MenuItem } from "@mui/material";
 import "./Home.css";
 import { useDispatch, useSelector } from "react-redux";
-import { studentRegister } from "../actions/AuthAction";
+import { studentRegister, teacherRegister } from "../actions/AuthAction";
 import axios from "../axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -52,24 +52,7 @@ function Register() {
           toast.error("Please enter all credentials");
           return;
         }
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-        const { data } = await axios.post(
-          "/api/requestTeacher",
-          { name, email, password },
-          config
-        );
-        console.log(data);
-        if (data.message === "success") {
-          toast.success(
-            "Request send successfully! You might become a teacher soon"
-          );
-        } else {
-          toast.warning(data.message);
-        }
+        dispatch(teacherRegister(name, email, password));
       } catch (error) {
         toast.error(error.message);
       }

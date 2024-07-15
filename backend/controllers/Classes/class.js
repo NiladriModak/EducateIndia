@@ -10,38 +10,6 @@ const prisma = new PrismaClient();
 
 // User Class Routes------------------------------------------------------------------------------------------------
 
-// Route to find all students in a specific class((user,admin))
-exports.findAllStudentsInClass = async (req, res, next) => {
-  try {
-    const { classId } = req.params;
-    const studentClasses = await prisma.StudentInClass.findMany({
-      where: {
-        classId: classId,
-      },
-      include: {
-        student: true,
-      },
-    });
-    const students = studentClasses.map((studentClass) => studentClass.student);
-    res.status(200).json({ students });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-exports.getAllClasses = async (req, res, next) => {
-  const { className } = req.params;
-  const allClasses = await prisma.Class.findUnique({
-    where: {
-      name: className,
-    },
-  });
-  res.status(200).json({
-    success: true,
-    classes: allClasses,
-  });
-};
-
 //get all teachers of a particular subject and particular class ((user))
 exports.getAllTeachersOfSubjectClass = async (req, res, next) => {
   try {
@@ -561,6 +529,7 @@ exports.createAnnounce = async (req, res, next) => {
 exports.requestTeacher = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
+    console.log(name, email, password);
     const alreadyExist = await prisma.Teacher.findFirst({
       where: {
         email,
@@ -676,58 +645,6 @@ exports.createClass = async (req, res, next) => {
   }
 };
 
-//assigning class to student ((admin))
-exports.assignClassToStudent = async (req, res) => {
-  try {
-    const { classId, studentId } = req.params;
-
-    // Check if the student exists
-    const student = await prisma.student.findUnique({
-      where: {
-        id: studentId,
-      },
-    });
-    if (!student) {
-      return res.status(400).json({ error: "Student not found" });
-    }
-
-    // Check if the class exists
-    const selectedClass = await prisma.class.findUnique({
-      where: {
-        id: classId,
-      },
-    });
-    if (!selectedClass) {
-      return res.status(400).json({ error: "Class not found" });
-    }
-
-    const exists = await prisma.studentInClass.findMany({
-      where: {
-        studentId: studentId,
-        classId: classId,
-      },
-    });
-    // console.log(exists);
-    if (exists.length > 0) {
-      res.json({
-        message: "already exist",
-      });
-      return;
-    }
-    // Create a new entry in the StudentInClass table
-    const enrollment = await prisma.StudentInClass.create({
-      data: {
-        student: { connect: { id: studentId } },
-        class: { connect: { id: classId } },
-      },
-    });
-
-    res.status(200).json({ enrollment });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error adding class to student" });
-  }
-};
 //assigning class to teacher must add subject ((admin))
 exports.assignClassToTeacher = async (req, res, next) => {
   try {
@@ -740,15 +657,19 @@ exports.assignClassToTeacher = async (req, res, next) => {
     var allClasses = [];
     for (const className of classNames) {
       // Find the class by name
-      const classData = await prisma.class.findUnique({
+      var classData = await prisma.class.findUnique({
         where: {
           name: className[0],
         },
       });
 
       if (!classData) {
-        console.log(`Class ${className[0]} not found.`);
-        continue;
+        const createClass = await prisma.Class.create({
+          data: {
+            name: className[0],
+          },
+        });
+        classData = createClass;
       }
 
       //check existance of subject
@@ -803,19 +724,31 @@ exports.assignClassToTeacher = async (req, res, next) => {
 
 exports.confirmTeacher = async (req, res, next) => {
   try {
-    const { email } = req.body;
-    const { dataa } = await prisma.TeacherPending.update({
-      where: {
-        email,
-      },
-      data: {
-        isConfirmed: true,
-      },
-    });
-    res.status(200).json({
-      dataa,
-      message: "true",
-    });
+    const { email, confirm } = req.body;
+    if (confirm === true) {
+      const dataa = await prisma.TeacherPending.update({
+        where: {
+          email,
+        },
+        data: {
+          isConfirmed: true,
+        },
+      });
+      res.status(200).json({
+        dataa,
+        message: "true",
+      });
+    } else if (confirm === false) {
+      const dataa = await prisma.TeacherPending.delete({
+        where: {
+          email,
+        },
+      });
+      res.status(200).json({
+        dataa,
+        message: "true",
+      });
+    }
   } catch (error) {
     next(new errorHandler("Error in confirming teacher", 400));
   }

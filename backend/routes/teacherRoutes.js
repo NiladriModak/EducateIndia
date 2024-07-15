@@ -14,7 +14,7 @@ const { teacherLogin } = require("../controllers/LoginSign/userControllers");
 const router = express.Router();
 router
   .route("/classes/:classId/subjects/:subjectId/teachers/:teacherId/uploadPdf")
-  .post(UploadPdf);
+  .post(isTeacher, UploadPdf);
 router
   .route(
     "/classes/:classId/subjects/:subjectId/teachers/:teacherId/uploadVideos"
@@ -22,18 +22,20 @@ router
   .post(isTeacher, uploadVideo);
 router
   .route("/classes/:classId/subjects/:subjectId/teachers/:teacherId/createTest")
-  .post(createTest);
+  .post(isTeacher, createTest);
 
 router
   .route("/classes/:classId/subjects/:subjectId/teachers/:teacherId/announce")
-  .post(createAnnounce);
+  .post(isTeacher, createAnnounce);
 
 router.route("/teacherLogin").post(teacherLogin);
 router
   .route("/teachers/:teacherId/getEnrolledClasses")
-  .get(getAllEnrolledClasses);
+  .get(isTeacher, getAllEnrolledClasses);
 router.route("/requestTeacher").post(requestTeacher);
-router.route("test/:testId/viewAllTestStudents").get(allTestStudents);
+router
+  .route("test/:testId/viewAllTestStudents")
+  .get(isTeacher, allTestStudents);
 
 router.route("/getFullDetails/:teacherId").get(getDetailsOfTeacher);
 module.exports = router;

@@ -20,6 +20,9 @@ import {
   GET_TEACHER_FAIL,
   GET_TEACHER_REQUEST,
   GET_TEACHER_SUCCESS,
+  REGISTER_TEACHER_FAIL,
+  REGISTER_TEACHER_REQUEST,
+  REGISTER_TEACHER_SUCCESS,
 } from "../constants/TeacherConstants";
 
 export const getTeacherReducer = (state = { teachers: {} }, action) => {
@@ -177,6 +180,27 @@ export const getAllDetails = (state = { allDetails: {} }, action) => {
         allDetails: action.payload,
       };
     case GET_ALL_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
+export const registerTeacher = (state = { teacher: {} }, action) => {
+  switch (action.type) {
+    case REGISTER_TEACHER_REQUEST:
+      return {
+        loading: true,
+      };
+    case REGISTER_TEACHER_SUCCESS:
+      return {
+        loading: false,
+        teacher: action.payload,
+      };
+    case REGISTER_TEACHER_FAIL:
       return {
         loading: false,
         error: action.payload,

@@ -23,10 +23,11 @@ function Home() {
       <div className="Container">
         <div className="first">
           <img
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "80%", height: "100%" }}
             // src="/logo1.png"
             src={
-              "https://theacademicinsights.com/wp-content/uploads/2021/10/education-in-21st-century.jpeg"
+              // "https://theacademicinsights.com/wp-content/uploads/2021/10/education-in-21st-century.jpeg"
+              "/cover.png"
             }
             alt="Eduacate India"
           />
@@ -38,7 +39,7 @@ function Home() {
               boxShadow: "1px 1px 1px 1px grey",
               padding: "3vmax",
               width: "70%",
-              height: "70%",
+              height: "fit-content",
             }}
           >
             <div style={{ fontFamily: "Courier New", marginBottom: "2vmax" }}>
@@ -98,11 +99,13 @@ function Home() {
                   fontSize: "1.2max",
                   fontWeight: "Bold",
                   cursor: "pointer",
+                  textWrap: "wrap",
+                  height: "fit-content",
                 }}
                 variant="outlined"
                 onClick={loginClick}
               >
-                Login as Teacher/Student/Admin
+                Login as Teacher/ Student/ Admin
               </Button>
             </div>
           </div>

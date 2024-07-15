@@ -33,7 +33,7 @@ router.route("/studentRegistration").post(studentRegistration);
 router.route("/studentLogin").post(studentLogin);
 
 router.route("/teacherRegistration").post(teacherRegistration);
-router.route("/classes/:classId/students").get(isAuth, findAllStudentsInClass);
+
 router
   .route("/classes/:classId/subjects/:subjectId/teachers")
   .get(isAuth, getAllTeachersOfSubjectClass);
@@ -55,7 +55,6 @@ router
     "/classes/:classId/subjects/:subjectId/teachers/:teacherId/test/:testId/giveTest"
   )
   .get(isAuth, getQuestions);
-router.route("/classes/:className").get(isAuth, getAllClasses);
 
 router
   .route("/classes/:classId/subejcts/:subjectId/teachers/:teacherId/viewTests")

@@ -25,13 +25,16 @@ import {
   getAllDetails,
   getEnrolledClasses,
   getTeacherReducer,
+  registerTeacher,
 } from "./reducers/TeacherReducer";
 import { getJob, getScholarship } from "./reducers/JobReducer";
 import { getBooks } from "./reducers/LibraryReducer";
+import { getPendingTeachers } from "./reducers/AdminReducer";
 
 // Combine reducers (you currently have an empty object, you'll add reducers here later)
 const reducers = combineReducers({
   student: studentAuthReducer,
+  teacher: registerTeacher,
   classId: classIdReducer,
   subjects: subjectReducer,
   teachers: getTeacherReducer,
@@ -55,6 +58,7 @@ const reducers = combineReducers({
   allBooks: getBooks,
   allDetails: getAllDetails,
   classDetails: getClassDetails,
+  pendingTeachers: getPendingTeachers,
 });
 
 // Define initial state for the store (currently empty)

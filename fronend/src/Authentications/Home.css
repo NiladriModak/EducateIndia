@@ -52,3 +52,17 @@
   cursor: pointer;
   color: blue;
 }
+
+@media screen and (max-width: 700px) {
+  .Container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+  .first {
+    width: 100%;
+  }
+  .second {
+    width: 100%;
+  }
+}

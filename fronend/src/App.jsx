@@ -23,6 +23,7 @@ import ViewTestTeacher from "./Component/StudentOptions/TeachingArea/ViewTestTea
 import GiveTest from "./Component/StudentOptions/TeachingArea/GiveTest";
 import ScholarshipDetails from "./Component/StudentOptions/Scholarships/ScholarshipDetails";
 import Library from "./Component/StudentOptions/Library/Library";
+import VerifyTeacher from "./Component/admin/verifyTeacher/VerifyTeacher";
 // import EnrolledClasses from "./Component/teacherComponents/EnrolledClasses";
 
 function App() {
@@ -106,6 +107,7 @@ function App() {
             path="/classes/:classId/subject/:subjectId/teacher/:teacherId/announcements/viewTest-student/:testId"
             element={<ViewTestTeacher />}
           />
+          <Route path="/verifyTeacher" element={<VerifyTeacher />} />
         </Route>
       </Routes>
     </Router>
