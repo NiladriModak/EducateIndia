@@ -4,12 +4,6 @@ import { useSelector } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
 
 function ProtectedRoute() {
-  //   const { loading } = useSelector((state) => state.loginUser);
-
-  //   if (loading) {
-  //     return <Loading />;
-  //   }
-
   if (
     !localStorage.getItem("token") ||
     localStorage.getItem("token") === undefined

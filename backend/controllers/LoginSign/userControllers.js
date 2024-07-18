@@ -162,9 +162,11 @@ exports.teacherRegistration = async (req, res, next) => {
         password: hashedpassword,
       },
     });
+    const token = jwt.sign(teacher.id, process.env.JWT_SECRET);
     res.status(200).json({
       teacher,
       success: true,
+      token,
     });
   } catch (error) {
     return next(new errorHandler(error.message, error.statusCode));
@@ -174,9 +176,10 @@ exports.teacherRegistration = async (req, res, next) => {
 exports.registerAdmin = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
+    console.log(req.body);
     if (!name || !email || !password) {
       return res.status(400).json({
-        message: "Fill all details",
+        message: "All details missing",
         success: false,
       });
     }
@@ -185,13 +188,15 @@ exports.registerAdmin = async (req, res, next) => {
         email,
       },
     });
-
+    console.log(exist);
     if (exist) {
-      return res.status(400).json({
-        success: false,
-        message: "Teacher allready exists",
+      res.status(200).json({
+        message: "admin alreay exist",
+        success: "false",
       });
+      return;
     }
+    console.log(exist);
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
     const admin = await prisma.Admin.create({
@@ -201,12 +206,19 @@ exports.registerAdmin = async (req, res, next) => {
         password: hashedpassword,
       },
     });
-    res.status(200).json({
-      admin,
+
+    const options = {
+      maxAge: 30 * 60 * 60 * 1000,
+      httpOnly: true,
+    };
+    const token = jwt.sign(admin.id, process.env.JWT_SECRET);
+    res.status(200).cookie("token", token, options).json({
       success: true,
+      admin,
+      token,
     });
   } catch (error) {
-    return next(new errorHandler(error.message, error.statusCode));
+    next(new errorHandler("error.message", error.statusCode));
   }
 };
 

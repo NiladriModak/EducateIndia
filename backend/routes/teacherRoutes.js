@@ -8,6 +8,7 @@ const {
   getAllEnrolledClasses,
   allTestStudents,
   getDetailsOfTeacher,
+  requestForClasses,
 } = require("../controllers/Classes/class");
 const { isTeacher } = require("../middlewires/auth");
 const { teacherLogin } = require("../controllers/LoginSign/userControllers");
@@ -38,4 +39,5 @@ router
   .get(isTeacher, allTestStudents);
 
 router.route("/getFullDetails/:teacherId").get(getDetailsOfTeacher);
+router.route("/requestForClasses").post(isTeacher, requestForClasses);
 module.exports = router;

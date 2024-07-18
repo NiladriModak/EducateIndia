@@ -13,6 +13,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [type, setType] = useState("Student");
+  const [disable, setDisable] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, isStudent } = useSelector((state) => state.student);
@@ -25,6 +26,7 @@ function Login() {
           toast.error("Please enter all details");
           return;
         }
+        setDisable(true);
         const config = { headers: { "Content-Type": "application/json" } };
         console.log(email);
         const { data } = await axios.get(
@@ -41,8 +43,10 @@ function Login() {
         if (localStorage.getItem("type") === "student") {
           navigate("/dashboard");
         }
+        setDisable(false);
       } catch (error) {
         toast.error(error.message);
+        setDisable(false);
       }
     } else if (type === "Teacher") {
       try {
@@ -51,6 +55,7 @@ function Login() {
           return;
         }
         const config = { headers: { "Content-Type": "application/json" } };
+        setDisable(true);
         const { data } = await axios.post(
           "/api/teacherLogin",
           { email, password },
@@ -69,8 +74,41 @@ function Login() {
           localStorage.setItem("teacherId", data.teacher.id);
           navigate("/teacherDashboard");
         }
+        setDisable(false);
       } catch (error) {
         console.log(error.message);
+        setDisable(false);
+      }
+    } else if (type === "Admin") {
+      try {
+        if (!email || !password) {
+          toast.error("Please enter your credentials to login");
+          return;
+        }
+        const config = { headers: { "Content-Type": "application/json" } };
+        setDisable(true);
+        const { data } = await axios.post(
+          "/api/loginAdmin",
+          { email, password },
+          config
+        );
+        if (data.success === false) {
+          toast.error(data.message);
+          return;
+        }
+        console.log(data);
+        if (data.success === true) {
+          console.log(data.token);
+
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("type", "admin");
+          localStorage.setItem("adminId", data.admin.id);
+          navigate("/adminDashboard");
+        }
+        setDisable(false);
+      } catch (error) {
+        console.log(error.message);
+        setDisable(false);
       }
     }
     // e.preventDefault();
@@ -154,7 +192,11 @@ function Login() {
             </MenuItem>
           ))}
         </TextField>
-        <Button variant="contained" onClick={handleLoginClick}>
+        <Button
+          disabled={disable}
+          variant="contained"
+          onClick={handleLoginClick}
+        >
           Login
         </Button>
         <div className="options">

@@ -594,6 +594,25 @@ exports.getAllEnrolledClasses = async (req, res, next) => {
     next(new errorHandler(error.message, 404));
   }
 };
+
+exports.requestForClasses = async (req, res, next) => {
+  try {
+    const { teacherId, className, subjectName } = req.body;
+    const requestForClass = await prisma.ClassPending.create({
+      data: {
+        teacherId,
+        className,
+        subjectName,
+      },
+    });
+    res.status(200).json({
+      success: true,
+      requestForClass,
+    });
+  } catch (error) {
+    next(new errorHandler(error, 400));
+  }
+};
 //get all the subjects entrolled by the teacher
 
 // teacher class route_______________________________________________________________________________________
@@ -644,7 +663,44 @@ exports.createClass = async (req, res, next) => {
     return next(new errorHandler("Error creating class", 404));
   }
 };
+//delete the confirmed or rejected classes
+exports.confirmClasses = async (req, res, next) => {
+  try {
+    const { teacherId, className, subjectName } = req.body;
 
+    // Check if the class exists before attempting to delete
+    const classPending = await prisma.ClassPending.findUnique({
+      where: {
+        teacherId_className_subjectName: {
+          teacherId,
+          className,
+          subjectName,
+        },
+      },
+    });
+
+    if (!classPending) {
+      return next(new errorHandler("Class not found", 404));
+    }
+
+    const data = await prisma.ClassPending.delete({
+      where: {
+        teacherId_className_subjectName: {
+          teacherId,
+          className,
+          subjectName,
+        },
+      },
+    });
+
+    res.status(200).json({
+      success: true,
+      data,
+    });
+  } catch (error) {
+    next(new errorHandler(error.message || "An error occurred", 400));
+  }
+};
 //assigning class to teacher must add subject ((admin))
 exports.assignClassToTeacher = async (req, res, next) => {
   try {
@@ -753,7 +809,16 @@ exports.confirmTeacher = async (req, res, next) => {
     next(new errorHandler("Error in confirming teacher", 400));
   }
 };
-
+exports.getAllPendingClasses = async (req, res, next) => {
+  try {
+    const allPendingClasses = await prisma.ClassPending.findMany({});
+    res.status(200).json({
+      allPendingClasses,
+    });
+  } catch (error) {
+    next(new errorHandler(error, 400));
+  }
+};
 exports.getAllPendingTeacher = async (req, res, next) => {
   try {
     const allPendingTeacher = await prisma.TeacherPending.findMany({});

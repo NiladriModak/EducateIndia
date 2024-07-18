@@ -21,8 +21,12 @@ function UnprotectedRoute() {
     localStorage.getItem("type") === "teacher"
   ) {
     return <Navigate to="/teacherDashboard" />;
+  } else if (
+    localStorage.getItem("token") &&
+    localStorage.getItem("type") === "admin"
+  ) {
+    return <Navigate to="/adminDashboard" />;
   }
-
   // console.log("If none of the above conditions are met, render the child components");
   return <Outlet />;
 }

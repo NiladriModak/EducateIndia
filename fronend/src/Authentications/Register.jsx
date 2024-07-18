@@ -9,6 +9,7 @@ import axios from "../axios";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Loading from "../Component/Loading/Loading";
+import { registerAdmin } from "../actions/AdminAction";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -18,6 +19,8 @@ function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, isStudent } = useSelector((state) => state.student);
+  const { loading: adminLoadin, admin } = useSelector((state) => state.admin);
+  const [disable, setDisable] = useState(false);
   const handleRegisterClick = async (e) => {
     console.log(type);
 
@@ -29,6 +32,7 @@ function Register() {
         }
         const config = { headers: { "Content-Type": "application/json" } };
         // console.log(email);
+        setDisable(true);
         const { data } = await axios.get(
           "/api/checkPayment",
           { params: { email: email } },
@@ -36,14 +40,17 @@ function Register() {
         );
         // console.log(data);
         if (data.success === false) {
+          setDisable(false);
           toast.error("Please pay to continue signing up");
           return;
         }
         await dispatch(studentRegister(name, email, password));
+        setDisable(false);
         if (isStudent) {
           navigate("/dashboard");
         }
       } catch (error) {
+        setDisable(false);
         toast.error(error.message);
       }
     } else if (type === "Teacher") {
@@ -52,8 +59,33 @@ function Register() {
           toast.error("Please enter all credentials");
           return;
         }
+        setDisable(true);
         dispatch(teacherRegister(name, email, password));
+        setDisable(false);
       } catch (error) {
+        setDisable(false);
+        toast.error(error.message);
+      }
+    } else {
+      try {
+        if (!name || !email || !password) {
+          toast.error("Please enter all credentials");
+          return;
+        }
+        setDisable(true);
+        await dispatch(registerAdmin(name, email, password));
+
+        setDisable(false);
+        if (admin && admin.success === true) {
+          toast.success("Registration Successful");
+          navigate("/adminDashboard");
+        }
+        if (admin.success === false) {
+          toast.success(admin.message);
+          return;
+        }
+      } catch (error) {
+        setDisable(false);
         toast.error(error.message);
       }
     }
@@ -108,7 +140,7 @@ function Register() {
             }}
             className="RegisterBox"
           >
-            <h2>Sign Up As A Student</h2>
+            <h2>Sign Up</h2>
             <TextField
               required
               label="Name"
@@ -146,7 +178,11 @@ function Register() {
                 </MenuItem>
               ))}
             </TextField>
-            <Button variant="contained" onClick={handleRegisterClick}>
+            <Button
+              disabled={disable}
+              variant="contained"
+              onClick={handleRegisterClick}
+            >
               SignUp
             </Button>
             <div className="options">

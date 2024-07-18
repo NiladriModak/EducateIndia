@@ -27,6 +27,13 @@ function Sidebar() {
       window.location.reload();
       return;
     }
+    if (localStorage.getItem("type") === "admin") {
+      localStorage.removeItem("adminId");
+      localStorage.removeItem("token");
+      localStorage.removeItem("type");
+      window.location.reload();
+      return;
+    }
   };
 
   return (
@@ -78,9 +85,21 @@ function Sidebar() {
                 <DashboardIcon sx={{ margin: "0 8px" }} />
                 <h3>Dashboard</h3>
               </Link>
-            ) : (
+            ) : localStorage.getItem("type") === "teacher" ? (
               <Link
                 to="/teacherDashboard"
+                style={{
+                  display: "flex",
+                  textDecoration: "none",
+                  color: "white",
+                }}
+              >
+                <DashboardIcon sx={{ margin: "0 8px" }} />
+                <h3>Dashboard</h3>
+              </Link>
+            ) : (
+              <Link
+                to="/adminDashboard"
                 style={{
                   display: "flex",
                   textDecoration: "none",
@@ -103,7 +122,7 @@ function Sidebar() {
                 <ClassIcon sx={{ margin: "0 8px" }} />
                 <h3>Classes and Courses</h3>
               </Link>
-            ) : (
+            ) : localStorage.getItem("type") === "teacher" ? (
               <Link
                 to="/enrolledClasses"
                 style={{
@@ -114,6 +133,18 @@ function Sidebar() {
               >
                 <ClassIcon sx={{ margin: "0 8px" }} />
                 <h3>Enrolled Classes</h3>
+              </Link>
+            ) : (
+              <Link
+                to="/verifyTeacher"
+                style={{
+                  display: "flex",
+                  textDecoration: "none",
+                  color: "white",
+                }}
+              >
+                <ClassIcon sx={{ margin: "0 8px" }} />
+                <h3>Verify Teachers</h3>
               </Link>
             )}
             <Link

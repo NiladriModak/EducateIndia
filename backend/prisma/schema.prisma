@@ -31,12 +31,12 @@ model Teacher {
   Videos     Videos[]
   test Test[]
   announcement Announcement[]
+  requestedClasses ClassPending[]
 }
 
 model Class {
   id         String                @id @default(cuid()) @map("_id")
   name       String                @unique
-  students   StudentInClass[]
   allDetails TeacherSubjectClass[]
   notes      Notes[]
   Videos     Videos[]
@@ -44,36 +44,20 @@ model Class {
   announcement Announcement[]
 }
 
-// model ClassTeacher {
-//   id        String  @id @default(cuid()) @map("_id")
-//   class     Class   @relation(fields: [classId], references: [id])
-//   classId   String
-//   teacher   Teacher @relation(fields: [teacherId], references: [id])
-//   teacherId String
 
-//   @@unique([classId, teacherId])
-// }
 
 model Student {
   id       String           @id @default(cuid()) @map("_id")
   name     String
   email    String           @unique
   password String
-  classes  StudentInClass[]
+
   teachers TeacherStudent[]
   answers Answer[]
   TotalIndivisualMarks StudentTest[]
 }
 
-model StudentInClass {
-  id        String  @id @default(cuid()) @map("_id")
-  student   Student @relation(fields: [studentId], references: [id])
-  studentId String
-  class     Class   @relation(fields: [classId], references: [id])
-  classId   String
 
-  @@unique([studentId, classId])
-}
 
 model TeacherStudent {
   id        String  @id @default(cuid()) @map("_id")
@@ -217,4 +201,12 @@ model StudentTest{
   totalMarks Float
   fullMarks Float
   @@unique([studentId, testId])
+}
+model ClassPending{
+  id         String                @id @default(cuid()) @map("_id")
+  teacher      Teacher @relation(fields:[teacherId], references:[id])
+  teacherId           String
+  className String
+  subjectName String
+  @@unique([teacherId, className, subjectName])
 }

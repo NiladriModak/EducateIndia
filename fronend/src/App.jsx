@@ -24,6 +24,7 @@ import GiveTest from "./Component/StudentOptions/TeachingArea/GiveTest";
 import ScholarshipDetails from "./Component/StudentOptions/Scholarships/ScholarshipDetails";
 import Library from "./Component/StudentOptions/Library/Library";
 import VerifyTeacher from "./Component/admin/verifyTeacher/VerifyTeacher";
+import AdminDashboard from "./Component/admin/adminDashboard/AdminDashboard";
 // import EnrolledClasses from "./Component/teacherComponents/EnrolledClasses";
 
 function App() {
@@ -108,6 +109,7 @@ function App() {
             element={<ViewTestTeacher />}
           />
           <Route path="/verifyTeacher" element={<VerifyTeacher />} />
+          <Route path="/adminDashboard" element={<AdminDashboard />} />
         </Route>
       </Routes>
     </Router>

@@ -95,3 +95,32 @@ export const teacherRegister = (name, email, password) => async (dispatch) => {
     toast.error(error.response.data.message);
   }
 };
+
+export const teacherRegisterConfirm =
+  (name, email, password) => async (dispatch) => {
+    try {
+      dispatch({ type: REGISTER_TEACHER_REQUEST });
+
+      const config = { headers: { "Content-Type": "application/json" } };
+
+      const { data } = await axios.post(
+        "/api/teacherRegistration",
+        { name, email, password },
+        config
+      );
+      console.log(data);
+      if (data.message === "success") {
+        toast.success("Teacher Registered Successfully");
+      } else {
+        toast.warning(data.message);
+      }
+
+      dispatch({ type: REGISTER_TEACHER_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: REGISTER_TEACHER_FAIL,
+        payload: error.response.data.message,
+      });
+      toast.error(error.response.data.message);
+    }
+  };

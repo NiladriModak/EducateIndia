@@ -89,7 +89,7 @@ function TeacherDashboard() {
             }}
           >
             <h2>Profile Details</h2>
-            <div style={{ display: "flex" }}>
+            <div style={{}}>
               <div>
                 <h4>
                   Name:
@@ -101,7 +101,7 @@ function TeacherDashboard() {
                     {/* <p>{student && student.student?.email}</p> */}
                   </span>
                 </h4>
-                <h4>
+                <h4 style={{ display: "flex" }}>
                   Type:
                   <span>
                     <p>Teacher</p>
@@ -114,7 +114,7 @@ function TeacherDashboard() {
                 </span> */}
                 </h4>
               </div>
-              <div>
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
                 <img
                   style={{
                     width: "15vmax",

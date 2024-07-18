@@ -57,7 +57,7 @@ exports.isTeacher = async (req, res, next) => {
   }
 };
 
-exports.isStudent = async (req, res, next) => {
+exports.isAdmin = async (req, res, next) => {
   try {
     if (
       req.headers.authorization &&
@@ -65,7 +65,7 @@ exports.isStudent = async (req, res, next) => {
     ) {
       const token = req.headers.authorization.split(" ")[1];
       var decode = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = await prisma.Student.findUnique({
+      req.user = await prisma.Admin.findUnique({
         where: {
           id: decode,
         },
