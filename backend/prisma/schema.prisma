@@ -14,14 +14,15 @@ generator client {
 }
 
 model Admin{
-  id       String @id @default(cuid()) @map("_id")
+  id       String @id @default(cuid()) @map("_id") 
   name     String
   email    String @unique
   password String
+  @@unique([email,id])
 }
 
 model Teacher {
-  id         String                @id @default(cuid()) @map("_id")
+  id         String                @id @default(cuid()) @map("_id") 
   name       String
   email      String                @unique
   password   String
@@ -32,10 +33,11 @@ model Teacher {
   test Test[]
   announcement Announcement[]
   requestedClasses ClassPending[]
+  @@unique([email,id])
 }
 
 model Class {
-  id         String                @id @default(cuid()) @map("_id")
+  id         String                @id @default(cuid()) @map("_id") 
   name       String                @unique
   allDetails TeacherSubjectClass[]
   notes      Notes[]
@@ -55,6 +57,7 @@ model Student {
   teachers TeacherStudent[]
   answers Answer[]
   TotalIndivisualMarks StudentTest[]
+  @@unique([email,id])
 }
 
 

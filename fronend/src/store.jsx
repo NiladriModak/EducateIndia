@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import { thunk } from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { studentAuthReducer } from "./reducers/AuthReducer";
+import { getUser, studentAuthReducer } from "./reducers/AuthReducer";
 import {
   classIdReducer,
   createAnswer,
@@ -65,6 +65,7 @@ const reducers = combineReducers({
   classDetails: getClassDetails,
   pendingTeachers: getPendingTeachers,
   pendingClasses: getPendingClasses,
+  user: getUser,
 });
 
 // Define initial state for the store (currently empty)

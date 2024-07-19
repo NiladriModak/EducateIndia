@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { getDetails } from "../../../actions/TeacherAction";
+import { getDetails, getUserTeacher } from "../../../actions/TeacherAction";
 import { useDispatch, useSelector } from "react-redux";
 import Loading from "../../Loading/Loading";
 import { Bar } from "react-chartjs-2";
@@ -26,10 +26,12 @@ ChartJS.register(
 function TeacherDashboard() {
   const dispatch = useDispatch();
   const { allDetails, loading } = useSelector((state) => state.allDetails);
+  const { user, loading: userLoading } = useSelector((state) => state.user);
   const chartRef = useRef(null);
 
   useEffect(() => {
     dispatch(getDetails());
+    dispatch(getUserTeacher());
   }, [dispatch]);
 
   const getData = () => {
@@ -89,16 +91,18 @@ function TeacherDashboard() {
             }}
           >
             <h2>Profile Details</h2>
-            <div style={{}}>
+            <div>
               <div>
-                <h4>
+                <h4 style={{ display: "flex" }}>
                   Name:
-                  <span>{/* <p>{student && student.student?.name}</p> */}</span>
+                  <span>
+                    <p>{user && user.teacher?.name}</p>
+                  </span>
                 </h4>
-                <h4>
+                <h4 style={{ display: "flex" }}>
                   Email:
                   <span>
-                    {/* <p>{student && student.student?.email}</p> */}
+                    <p>{user && user.teacher?.email}</p>
                   </span>
                 </h4>
                 <h4 style={{ display: "flex" }}>
@@ -107,7 +111,7 @@ function TeacherDashboard() {
                     <p>Teacher</p>
                   </span>
                 </h4>
-                <h4>
+                <h4 style={{ display: "flex" }}>
                   Phone Number:
                   {/* <span>
                   <p>{student && student.student?.name}</p>

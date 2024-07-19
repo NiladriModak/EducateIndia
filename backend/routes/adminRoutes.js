@@ -11,6 +11,7 @@ const { isAuth, isAdmin } = require("../middlewires/auth");
 const {
   registerAdmin,
   adminLogin,
+  getAdmin,
 } = require("../controllers/LoginSign/userControllers");
 const router = express.Router();
 router.route("/registerAdmin").post(registerAdmin);
@@ -23,4 +24,5 @@ router.route("/confirmTeacher").put(isAdmin, confirmTeacher);
 router.route("/getAllPendingTeachers").get(isAdmin, getAllPendingTeacher);
 router.route("/confirmClasses").put(isAdmin, confirmClasses);
 router.route("/getAllPendingClasses").get(isAdmin, getAllPendingClasses);
+router.route("/getAdmin").get(getAdmin);
 module.exports = router;

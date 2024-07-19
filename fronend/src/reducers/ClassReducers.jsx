@@ -260,7 +260,7 @@ export const getAllTestMarksReducer = (
   state = { alltestMarks: {} },
   action
 ) => {
-  console.log("reduer", action.payload);
+  "reduer", action.payload;
 
   switch (action.type) {
     case GET_ALL_TEST_MARKS_REQUEST:

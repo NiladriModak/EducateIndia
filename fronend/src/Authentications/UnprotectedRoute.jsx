@@ -14,7 +14,7 @@ function UnprotectedRoute() {
     localStorage.getItem("token") &&
     localStorage.getItem("type") === "student"
   ) {
-    // console.log("Redirect to the login page if the user is not authenticated");
+    // ("Redirect to the login page if the user is not authenticated");
     return <Navigate to="/dashboard" />;
   } else if (
     localStorage.getItem("token") &&
@@ -27,7 +27,7 @@ function UnprotectedRoute() {
   ) {
     return <Navigate to="/adminDashboard" />;
   }
-  // console.log("If none of the above conditions are met, render the child components");
+  // ("If none of the above conditions are met, render the child components");
   return <Outlet />;
 }
 

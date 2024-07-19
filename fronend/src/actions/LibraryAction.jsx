@@ -15,7 +15,7 @@ export const getBooks = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get("http://gutendex.com/books/", config);
-    console.log(data);
+    data;
 
     await dispatch({ type: GET_ALL_BOOKS_SUCCESS, payload: data });
   } catch (error) {

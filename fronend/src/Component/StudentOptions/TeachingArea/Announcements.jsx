@@ -41,8 +41,8 @@ function Announcements() {
 
   const createNewAnnouncement = async () => {
     try {
-      console.log(heading, content);
-      console.log(classId, subjectId);
+      heading, content;
+      bjectId;
       await dispatch(createAnnouncements(classId, subjectId, heading, content));
     } catch (error) {}
   };

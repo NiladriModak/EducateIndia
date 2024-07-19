@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Bar, Pie, Line } from "react-chartjs-2";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllTestMarks } from "../../actions/ClassAction";
+import { getAllTestMarks, getUserStudent } from "../../actions/ClassAction";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -28,7 +28,7 @@ ChartJS.register(
 );
 function Dashboard() {
   const dispatch = useDispatch();
-  const { student } = useSelector((state) => state.student);
+  const { user, loading: userLoading } = useSelector((state) => state.user);
   const studentId = localStorage.getItem("studentId");
   const chartRef = useRef(null);
   const { allTestMarks, loading, error } = useSelector(
@@ -38,13 +38,20 @@ function Dashboard() {
   useEffect(() => {
     if (studentId) {
       dispatch(getAllTestMarks(studentId));
+      dispatch(getUserStudent());
     }
-  }, [studentId, dispatch]);
+  }, [studentId, dispatch, localStorage.getItem("token")]);
   const data = [0];
   const getThreeTests = () => {
     var tdata = [];
     if (allTestMarks) {
       tdata = allTestMarks.studentTestMarks;
+
+      if (tdata.length === 0) {
+        return <p>No test given </p>;
+      }
+      "tdata", tdata;
+
       tdata.sort((a, b) => {
         a.totalMarks / a.fullMarks - b.totalMarks / b.fullMarks;
       });
@@ -98,7 +105,7 @@ function Dashboard() {
 
   return (
     <>
-      {loading ? (
+      {loading || userLoading ? (
         <Loading />
       ) : (
         <div
@@ -111,7 +118,7 @@ function Dashboard() {
             flexDirection: "column",
           }}
         >
-          <h1>Welcome {student && student.student?.name}</h1>
+          <h1>Welcome {user && user.student?.name}</h1>
           <div
             style={{
               display: "flex",
@@ -134,7 +141,7 @@ function Dashboard() {
             </div>
             <div
               style={{
-                width: "500px",
+                width: "fit-content",
                 height: "fit-content",
                 // boxShadow: "1px 1px 1px 1px grey",
                 padding: "2vmax",
@@ -147,13 +154,13 @@ function Dashboard() {
                   <h4>
                     Name:
                     <span>
-                      <p>{student && student.student?.name}</p>
+                      <p>{user && user.student?.name}</p>
                     </span>
                   </h4>
                   <h4>
                     Email:
                     <span>
-                      <p>{student && student.student?.email}</p>
+                      <p>{user && user.student?.email}</p>
                     </span>
                   </h4>
                   <h4>

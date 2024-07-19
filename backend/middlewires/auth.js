@@ -3,14 +3,15 @@ const { PrismaClient } = require("@prisma/client");
 const ErrorHandler = require("../utils/ErrorHandler");
 const prisma = new PrismaClient();
 exports.isAuth = async (req, res, next) => {
-  // console.log("0");
+  // ("0");
   try {
+    "came", req.headers.authorization;
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
     ) {
       const token = req.headers.authorization.split(" ")[1];
-
+      token;
       var decode = await jwt.verify(token, process.env.JWT_SECRET);
 
       req.student = await prisma.Student.findUnique({
@@ -18,14 +19,14 @@ exports.isAuth = async (req, res, next) => {
           id: decode,
         },
       });
-      // console.log("sher aya", req.user);
+      // ("sher aya", req.user);
       if (!req.user) {
         req.teacher = await prisma.Teacher.findUnique({
           where: {
             id: decode,
           },
         });
-        // console.log("sher nhi aya", req.user);
+        // ("sher nhi aya", req.user);
       }
       next();
     } else {

@@ -45,7 +45,7 @@ function Videos() {
   };
 
   useEffect(() => {
-    console.log(videos, subjectId);
+    videos, subjectId;
     // if (!videos || Object.keys(videos).length === 0)
     dispatch(getVideos(classId, subjectId, teacherId));
   }, [classId, subjectId, teacherId]);

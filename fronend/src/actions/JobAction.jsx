@@ -19,7 +19,7 @@ export const getJob = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get("/api/getJobs", config);
-    console.log(data);
+    data;
 
     await dispatch({ type: GET_JOB_SUCCESS, payload: data });
   } catch (error) {
@@ -42,7 +42,7 @@ export const getScholarship = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get("/api/getScholarships", config);
-    console.log(data);
+    data;
 
     await dispatch({ type: GET_SCHOLARSHIP_SUCCESS, payload: data });
   } catch (error) {

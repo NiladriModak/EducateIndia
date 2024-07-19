@@ -17,7 +17,7 @@ function Payment() {
     // e.preventDefault();
     if (!name || !email || !contact)
       return toast.error("Please enter all details");
-    console.log("came");
+    ("came");
     const {
       data: { key },
     } = await axios.get("http://localhost/api/getRazorKey");
@@ -45,7 +45,7 @@ function Payment() {
           name,
         });
         window.location.href = "http://localhost:5173/studentRegister";
-        // console.log(data);
+        // (data);
       },
       prefill: {
         name: name,

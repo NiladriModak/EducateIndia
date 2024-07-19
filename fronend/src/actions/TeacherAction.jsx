@@ -23,6 +23,11 @@ import {
 } from "../constants/TeacherConstants";
 import { getAnnouncements, getNotes, getTests, getVideos } from "./ClassAction";
 import { duration } from "@mui/material";
+import {
+  GET_USER_FAIL,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+} from "../constants/AuthConstants";
 export const getTeachers = (classId, subjectId) => async (dispatch) => {
   try {
     dispatch({ type: GET_TEACHER_REQUEST });
@@ -37,7 +42,7 @@ export const getTeachers = (classId, subjectId) => async (dispatch) => {
       `api/classes/${classId}/subjects/${subjectId}/teachers`,
       config
     );
-    console.log(data);
+    data;
     dispatch({ type: GET_TEACHER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: GET_TEACHER_FAIL, payload: error.response.data.message });
@@ -49,10 +54,10 @@ export const getEnrolledClassesAction = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ENROLLED_CLASSES_REQUEST });
     const token = localStorage.getItem("token");
-    console.log(token);
+    token;
 
     const id = localStorage.getItem("teacherId");
-    console.log("id", id);
+    "id", id;
 
     const config = {
       headers: {
@@ -88,7 +93,7 @@ export const createAnnouncements =
         { heading: heading, content },
         config
       );
-      console.log(data);
+      data;
 
       await dispatch({ type: CREATE_ANNOUNCEMENT_SUCCESS, payload: data });
       await dispatch(getAnnouncements(classId, subjectId, id));
@@ -103,7 +108,7 @@ export const createAnnouncements =
 
 export const createNotes =
   (classId, subjectId, name, description, pdfFile) => async (dispatch) => {
-    // console.log("Entered createNotes function");
+    // ("Entered createNotes function");
 
     try {
       dispatch({ type: CREATE_NOTES_REQUEST });
@@ -120,14 +125,14 @@ export const createNotes =
       formData.append("name", name);
       formData.append("description", description);
       formData.append("pdfData", pdfFile); // Ensure the key matches the expected key on the server
-      // console.log(pdfFile);
+      // (pdfFile);
 
       const { data } = await axios.post(
         `/api/classes/${classId}/subjects/${subjectId}/teachers/${id}/uploadPdf`,
         formData,
         config
       );
-      // console.log(data);
+      // (data);
       dispatch({ type: CREATE_NOTES_SUCCESS, payload: data });
       dispatch(getNotes(classId, subjectId, id));
     } catch (error) {
@@ -148,7 +153,7 @@ export const createVideos =
           "Content-Type": "application/json", // This is important for file uploads
         },
       };
-      // console.log("Create Video Teacher Action", name, description, url);
+      // ("Create Video Teacher Action", name, description, url);
 
       const { data } = await axios.post(
         `api/classes/${classId}/subjects/${subjectId}/teachers/${id}/uploadVideos`,
@@ -184,7 +189,7 @@ export const createTests =
       dispatch({ type: CREATE_TEST_SUCCESS, payload: data });
       dispatch(getTests(classId, subjectId, localStorage.getItem("teacherId")));
     } catch (error) {
-      console.log("creating test ", error);
+      // ("creating test ", error);
 
       dispatch({ type: CREATE_TEST_FAIL, payload: error });
     }
@@ -205,5 +210,25 @@ export const getDetails = () => async (dispatch) => {
     dispatch({ type: GET_ALL_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: CREATE_TEST_FAIL, payload: error });
+  }
+};
+
+export const getUserTeacher = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_USER_REQUEST });
+    const token = localStorage.getItem("token");
+    const teacherId = localStorage.getItem("teacherId");
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/getTeacher`, { teacherId }, config);
+    data;
+
+    dispatch({ type: GET_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: GET_USER_FAIL, payload: error });
   }
 };

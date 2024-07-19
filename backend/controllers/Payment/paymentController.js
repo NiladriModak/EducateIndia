@@ -13,12 +13,12 @@ exports.checkout = async (req, res, next) => {
       currency: "INR",
     };
     const order = await instance.orders.create(options);
-    // console.log(order);
+    // (order);
     res.status(200).json({
       order,
     });
   } catch (error) {
-    console.log(error);
+    error;
   }
 };
 
@@ -43,7 +43,7 @@ exports.paymentVerification = async (req, res, next) => {
     razorpay_order_id + "|" + razorpay_payment_id,
     process.env.RAZORPAY_SECRET
   );
-  //   console.log(generated_signature, razorpay_signature);
+  //   (generated_signature, razorpay_signature);
   if (generated_signature === razorpay_signature) {
     // payment is successful
     const payment = await prisma.Payment.create({
@@ -56,7 +56,7 @@ exports.paymentVerification = async (req, res, next) => {
         PaymentStatus: true,
       },
     });
-    // console.log(payment);
+    // (payment);
     return res.redirect(
       `http://localhost:5173/paymentSuccess?reference=${razorpay_payment_id}`
     );
@@ -69,18 +69,20 @@ exports.paymentVerification = async (req, res, next) => {
 exports.checkPayment = async (req, res, next) => {
   try {
     const { email } = req.query;
-    console.log(email);
-    const data = await prisma.Payment.findUnique({
+    email;
+    const data = await prisma.Payment.findMany({
       where: {
         email,
       },
     });
     if (!data) {
+      // ("first");
       return res.json({
         success: false,
         message: "Payment not done yet",
       });
     }
+    // ("second");
     res.json({
       success: true,
       payment: data,

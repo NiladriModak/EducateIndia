@@ -25,7 +25,7 @@ function Test() {
   if (localStorage.getItem("type") === "teacher") {
     teacherId = localStorage.getItem("teacherId");
   }
-  // console.log("test to check student", studentTest);
+  // ("test to check student", studentTest);
 
   const handleCreateTest = () => {
     navigator(

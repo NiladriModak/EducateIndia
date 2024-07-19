@@ -14,7 +14,7 @@ function ClassDiv(props) {
     try {
       navigator(`/classes/${props.classid}/subjects`);
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
   const classId = props.classid;

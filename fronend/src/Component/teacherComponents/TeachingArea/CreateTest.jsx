@@ -42,12 +42,12 @@ function CreateTest() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    console.log("Updated allquestions:", allquestions);
+    "Updated allquestions:", allquestions;
   }, [allquestions]);
 
   const handleSend = () => {
     if (question && marks && alloptions.length && correctAnswer) {
-      console.log(question, marks, alloptions, correctAnswer);
+      question, marks, alloptions, correctAnswer;
 
       setAllquestions((prevQuestions) => [
         ...prevQuestions,
@@ -69,7 +69,7 @@ function CreateTest() {
 
   const confirmTest = () => {
     if (!title || !description || !duration || !allquestions || !startTime) {
-      console.log(title, description, duration, allquestions, startTime);
+      title, description, duration, allquestions, startTime;
 
       toast.error("Please enter all the details to create test");
       return;

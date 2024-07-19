@@ -25,6 +25,7 @@ import ScholarshipDetails from "./Component/StudentOptions/Scholarships/Scholars
 import Library from "./Component/StudentOptions/Library/Library";
 import VerifyTeacher from "./Component/admin/verifyTeacher/VerifyTeacher";
 import AdminDashboard from "./Component/admin/adminDashboard/AdminDashboard";
+import Chatgpt from "./Component/Chatgpt/Chatgpt";
 // import EnrolledClasses from "./Component/teacherComponents/EnrolledClasses";
 
 function App() {
@@ -110,6 +111,7 @@ function App() {
           />
           <Route path="/verifyTeacher" element={<VerifyTeacher />} />
           <Route path="/adminDashboard" element={<AdminDashboard />} />
+          <Route path="/chatGpt" element={<Chatgpt />} />
         </Route>
       </Routes>
     </Router>

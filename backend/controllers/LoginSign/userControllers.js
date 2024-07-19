@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 exports.studentRegistration = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-    // console.log(req.body);
+    // (req.body);
     if (!name || !email || !password) {
       return res.status(400).json({
         message: "All details missing",
@@ -19,7 +19,7 @@ exports.studentRegistration = async (req, res, next) => {
         email,
       },
     });
-    // console.log(exist);
+    // (exist);
     if (exist) {
       res.status(400).json({
         message: "student alreay exist",
@@ -27,7 +27,7 @@ exports.studentRegistration = async (req, res, next) => {
       });
       return;
     }
-    // console.log(exist);
+    // (exist);
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
     const student = await prisma.Student.create({
@@ -55,7 +55,7 @@ exports.studentRegistration = async (req, res, next) => {
 
 exports.studentLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  // console.log(req.body);
+  // (req.body);
   if (!email || !password) {
     return res.status(404).json({
       message: "All details missing",
@@ -94,7 +94,7 @@ exports.studentLogin = async (req, res, next) => {
 
 exports.teacherLogin = async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(email, password);
+  email, password;
   if (!email || !password) {
     return next(new errorHandler("All details missing", 400));
   }
@@ -103,7 +103,7 @@ exports.teacherLogin = async (req, res, next) => {
       email,
     },
   });
-  console.log(exist);
+  exist;
   if (!exist) {
     return res.status(200).json({
       message: "Please sign up",
@@ -111,7 +111,7 @@ exports.teacherLogin = async (req, res, next) => {
     });
   }
   const matchPassword = await bcrypt.compare(password, exist.password);
-  console.log(matchPassword);
+  matchPassword;
   if (!matchPassword) {
     return res.status(200).json({
       message: "Wrong Credentials ",
@@ -176,7 +176,7 @@ exports.teacherRegistration = async (req, res, next) => {
 exports.registerAdmin = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-    console.log(req.body);
+    req.body;
     if (!name || !email || !password) {
       return res.status(400).json({
         message: "All details missing",
@@ -188,7 +188,7 @@ exports.registerAdmin = async (req, res, next) => {
         email,
       },
     });
-    console.log(exist);
+    exist;
     if (exist) {
       res.status(200).json({
         message: "admin alreay exist",
@@ -196,7 +196,7 @@ exports.registerAdmin = async (req, res, next) => {
       });
       return;
     }
-    console.log(exist);
+    exist;
     const salt = await bcrypt.genSalt(10);
     const hashedpassword = await bcrypt.hash(password, salt);
     const admin = await prisma.Admin.create({
@@ -225,7 +225,7 @@ exports.registerAdmin = async (req, res, next) => {
 exports.adminLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
+    email, password;
     if (!email || !password) {
       return next(new errorHandler("All details missing", 400));
     }
@@ -234,7 +234,7 @@ exports.adminLogin = async (req, res, next) => {
         email,
       },
     });
-    console.log(exist);
+    exist;
     if (!exist) {
       return res.status(200).json({
         message: "Please sign up",
@@ -242,7 +242,7 @@ exports.adminLogin = async (req, res, next) => {
       });
     }
     const matchPassword = await bcrypt.compare(password, exist.password);
-    console.log(matchPassword);
+    matchPassword;
     if (!matchPassword) {
       return res.status(200).json({
         message: "Wrong Credentials ",
@@ -261,5 +261,73 @@ exports.adminLogin = async (req, res, next) => {
     });
   } catch (error) {
     next(new errorHandler(error.message, 400));
+  }
+};
+
+//get user
+exports.getStudent = async (req, res, next) => {
+  try {
+    const { studentId } = req.body;
+    const data = await prisma.Student.findFirst({
+      where: {
+        id: studentId,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+    res.status(200).json({
+      student: data,
+      success: true,
+    });
+  } catch (error) {
+    next(new errorHandler(error, 400));
+  }
+};
+//get teachers
+exports.getTeacher = async (req, res, next) => {
+  try {
+    const { teacherId } = req.body;
+    const data = await prisma.Teacher.findFirst({
+      where: {
+        id: teacherId,
+      },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+    res.status(200).json({
+      teacher: data,
+      success: true,
+    });
+  } catch (error) {
+    next(new errorHandler(error, 400));
+  }
+};
+//get admin
+exports.getAdmin = async (req, res, next) => {
+  try {
+    const { adminId } = req.body;
+    const data = await prisma.Admin.findFirst({
+      where: {
+        id: adminId,
+      },
+
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
+    });
+    res.status(200).json({
+      admin: data,
+      success: true,
+    });
+  } catch (error) {
+    next(new errorHandler(error, 400));
   }
 };

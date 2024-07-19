@@ -5,6 +5,7 @@ const {
   teacherRegistration,
   studentLogin,
   teacherLogin,
+  getStudent,
 } = require("../controllers/LoginSign/userControllers");
 const {
   findAllStudentsInClass,
@@ -26,6 +27,7 @@ const {
   getJob,
   getScholarships,
   getAllClassDetails,
+  chatGpt,
 } = require("../controllers/Classes/class");
 const { isAuth } = require("../middlewires/auth");
 
@@ -82,4 +84,6 @@ router.route("/student/:studentId/getTestMarks").get(getMarksOfAllGivenTest);
 router.route("/getJobs").get(isAuth, getJob);
 router.route("/getScholarships").get(isAuth, getScholarships);
 router.route("/getallClassDetails").get(isAuth, getAllClassDetails);
+router.route("/getallClassDetails").get(isAuth, getAllClassDetails);
+router.route("/getStudent").get(getStudent);
 module.exports = router;

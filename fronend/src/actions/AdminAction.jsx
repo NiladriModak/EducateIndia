@@ -13,6 +13,11 @@ import axios from "../axios";
 import { teacherRegister, teacherRegisterConfirm } from "./AuthAction";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  GET_USER_FAIL,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+} from "../constants/AuthConstants";
 export const getPendingTeachers = () => async (dispatch) => {
   try {
     dispatch({ type: GET_PENDING_TEACHERS_REQUEST });
@@ -24,7 +29,7 @@ export const getPendingTeachers = () => async (dispatch) => {
       },
     };
     const { data } = await axios.get(`/api/getAllPendingTeachers`, config);
-    console.log(data);
+    data;
 
     dispatch({ type: GET_PENDING_TEACHERS_SUCCESS, payload: data });
   } catch (error) {
@@ -57,9 +62,9 @@ export const confirmTeacher =
         { email, confirm },
         config
       );
-      console.log(data);
+      data;
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
 
@@ -112,10 +117,10 @@ export const confirmPendingClasses =
         { teacherId, className, subjectName },
         config
       );
-      console.log(data);
+      data;
       toast.success("deleted successfully");
     } catch (error) {
-      console.log(error);
+      error;
       toast.error("overall error");
     }
   };
@@ -134,10 +139,10 @@ export const createClass = (classNames, teacherId) => async (dispatch) => {
       { classNames },
       config
     );
-    console.log(data);
+    data;
     toast.success("Class Registered Successfully");
   } catch (error) {
-    console.log(error);
+    error;
     toast.error("Class is not registered");
   }
 };
@@ -156,5 +161,23 @@ export const getAllPendingClasses = () => async (dispatch) => {
     dispatch({ type: GET_PENDING_CLASSES_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: GET_PENDING_CLASSES_FAIL, payload: error });
+  }
+};
+
+export const getUserAdmin = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_USER_REQUEST });
+    const token = localStorage.getItem("token");
+    const adminId = localStorage.getItem("adminId");
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/getAdmin`, { adminId }, config);
+    dispatch({ type: GET_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: GET_USER_FAIL, payload: error });
   }
 };

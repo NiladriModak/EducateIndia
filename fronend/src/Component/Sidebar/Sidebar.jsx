@@ -180,7 +180,7 @@ function Sidebar() {
               <LibraryBooksIcon sx={{ margin: "0 8px" }} />
               <h3>Library</h3>
             </Link>
-            <Link
+            {/* <Link
               to="/discuss"
               style={{
                 display: "flex",
@@ -190,7 +190,7 @@ function Sidebar() {
             >
               <ChatIcon sx={{ margin: "0 8px" }} />
               <h3>Discuss Section</h3>
-            </Link>
+            </Link> */}
             <Link
               to="/chatGpt"
               style={{

@@ -38,6 +38,11 @@ import {
   UPLOAD_TOT_MARKS_REQUEST,
   UPLOAD_TOT_MARKS_SUCCESS,
 } from "../constants/ClassConstants";
+import {
+  GET_USER_FAIL,
+  GET_USER_REQUEST,
+  GET_USER_SUCCESS,
+} from "../constants/AuthConstants";
 
 export const getClassId = (className) => async (dispatch) => {
   try {
@@ -62,7 +67,7 @@ export const getClassId = (className) => async (dispatch) => {
 
 export const getNotes = (classId, subjectId, teacherId) => async (dispatch) => {
   try {
-    // console.log("elen");
+    // ("elen");
     dispatch({ type: GET_NOTES_REQUEST });
     const token = localStorage.getItem("token");
     if (localStorage.getItem("type") === "teacher" && !teacherId) {
@@ -78,7 +83,7 @@ export const getNotes = (classId, subjectId, teacherId) => async (dispatch) => {
       `/api/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}/showPdf`,
       config
     );
-    // console.log(data);
+    // (data);
     await dispatch({ type: GET_NOTES_SUCCESS, payload: data });
   } catch (error) {
     await dispatch({
@@ -96,7 +101,7 @@ export const getVideos =
         teacherId = localStorage.getItem("teacherId");
       dispatch({ type: GET_VIDEOS_REQUEST });
       if (!classId || !subjectId || !teacherId) return;
-      //console.log("ji", classId, subjectId, teacherId);
+      //("ji", classId, subjectId, teacherId);
 
       const token = localStorage.getItem("token");
       const config = {
@@ -110,7 +115,7 @@ export const getVideos =
         `/api/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}/showVideos`,
         config
       );
-      console.log(data);
+      data;
       await dispatch({ type: GET_VIDEOS_SUCCESS, payload: data });
     } catch (error) {
       await dispatch({
@@ -124,12 +129,12 @@ export const getVideos =
 export const getTests = (classId, subjectId, teacherId) => async (dispatch) => {
   try {
     dispatch({ type: GET_TEST_REQUEST });
-    console.log("get test", classId, subjectId, teacherId);
+    "get test", classId, subjectId, teacherId;
     if (!teacherId && localStorage.getItem("type") === "teacher")
       teacherId = localStorage.getItem("teacherId");
 
     if (!classId || !subjectId || !teacherId) return;
-    //console.log("ji", classId, subjectId, teacherId);
+    //("ji", classId, subjectId, teacherId);
 
     const token = localStorage.getItem("token");
     const config = {
@@ -142,7 +147,7 @@ export const getTests = (classId, subjectId, teacherId) => async (dispatch) => {
       `/api/classes/${classId}/subejcts/${subjectId}/teachers/${teacherId}/viewTests`,
       config
     );
-    console.log(data);
+    data;
     dispatch({ type: GET_TEST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: GET_TEST_FAIL, payload: error.response.data.message });
@@ -169,7 +174,7 @@ export const getAnnouncements =
         `/api/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}/announce`,
         config
       );
-      console.log(data);
+      data;
       await dispatch({ type: GET_ANNOUNCEMENTS_SUCCESS, payload: data });
     } catch (error) {
       toast.error(error.response.data.message);
@@ -183,7 +188,7 @@ export const getAnnouncements =
 export const getQuestions =
   (classId, subjectId, teacherId, testId) => async (dispatch) => {
     try {
-      console.log(classId, " ", subjectId, " ", teacherId, " ", testId);
+      classId, " ", subjectId, " ", teacherId, " ", testId;
 
       dispatch({ type: GET_QUESTIONS_REQUEST });
       const token = localStorage.getItem("token");
@@ -197,7 +202,7 @@ export const getQuestions =
         `/api/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}/test/${testId}/giveTest`,
         config
       );
-      console.log(data);
+      data;
       dispatch({ type: GET_QUESTIONS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -222,7 +227,7 @@ export const getSingleTest =
         `/api/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}/viewTests/${testId}`,
         config
       );
-      console.log(data);
+      data;
       dispatch({ type: GET_SINGLE_TEST_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -236,7 +241,7 @@ export const createAnswers =
   (questionId, testId, studentId, givenAnswer, obtainedMarks) =>
   async (dispatch) => {
     try {
-      // console.log(questionId, testId, studentId, givenAnswer, obtainedMarks);
+      // (questionId, testId, studentId, givenAnswer, obtainedMarks);
 
       dispatch({ type: CREATE_ANSWERS_REQUEST });
       const token = localStorage.getItem("token");
@@ -255,7 +260,7 @@ export const createAnswers =
         { givenAnswer, obtainedMarks },
         config
       );
-      console.log(data);
+      data;
       dispatch({ type: CREATE_ANSWERS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -279,7 +284,7 @@ export const getStudentTest = (studentId) => async (dispatch) => {
       `/api/student/${studentId}/getStudent`,
       config
     );
-    console.log(data);
+    data;
     dispatch({ type: GET_STUDENT_TEST_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -305,7 +310,7 @@ export const uploadTotalMarks =
         { totalMarks, fullMarks },
         config
       );
-      console.log(data);
+      data;
       dispatch({ type: UPLOAD_TOT_MARKS_SUCCESS, payload: data });
     } catch (error) {
       dispatch({
@@ -328,7 +333,7 @@ export const getAllTestMarks = (studentId) => async (dispatch) => {
       `/api/student/${studentId}/getTestMarks`,
       config
     );
-    console.log(data);
+    data;
     dispatch({ type: GET_ALL_TEST_MARKS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
@@ -355,5 +360,31 @@ export const getClassDetails = () => async (dispatch) => {
       type: GET_ALL_CLASS_DETAILS_FAIL,
       payload: error.response.data.message,
     });
+  }
+};
+
+export const getUserStudent = () => async (dispatch) => {
+  try {
+    dispatch({ type: GET_USER_REQUEST });
+    const studentId = localStorage.getItem("studentId");
+    const token = localStorage.getItem("token");
+    token, studentId;
+
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    };
+    const { data } = await axios.get(
+      `/api/getStudent`,
+      { studentId: studentId },
+      config
+    );
+    data;
+
+    dispatch({ type: GET_USER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: GET_USER_FAIL, payload: error });
   }
 };

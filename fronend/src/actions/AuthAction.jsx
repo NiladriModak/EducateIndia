@@ -41,7 +41,7 @@ export const studentRegister = (name, email, password) => async (dispatch) => {
 
 export const studentLogin = (email, password) => async (dispatch) => {
   try {
-    // console.log("came");
+    // ("came");
     dispatch({ type: REQUEST_LOGIN_STUDENT });
 
     const config = { headers: { "Content-Type": "application/json" } };
@@ -55,7 +55,7 @@ export const studentLogin = (email, password) => async (dispatch) => {
     localStorage.setItem("type", "student");
     localStorage.setItem("token", data.token);
     localStorage.setItem("studentId", data.student.id);
-    console.log(data);
+    data;
     dispatch({ type: SUCCESS_LOGIN_STUDENT, payload: data });
   } catch (error) {
     dispatch({
@@ -77,7 +77,7 @@ export const teacherRegister = (name, email, password) => async (dispatch) => {
       { name, email, password },
       config
     );
-    console.log(data);
+    data;
     if (data.message === "success") {
       toast.success(
         "Request send successfully! You might become a teacher soon"
@@ -108,7 +108,7 @@ export const teacherRegisterConfirm =
         { name, email, password },
         config
       );
-      console.log(data);
+      data;
       if (data.message === "success") {
         toast.success("Teacher Registered Successfully");
       } else {

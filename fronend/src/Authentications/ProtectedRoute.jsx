@@ -8,11 +8,11 @@ function ProtectedRoute() {
     !localStorage.getItem("token") ||
     localStorage.getItem("token") === undefined
   ) {
-    // console.log("Redirect to the login page if the user is not authenticated");
+    // ("Redirect to the login page if the user is not authenticated");
     return <Navigate to="/" />;
   }
 
-  // console.log("If none of the above conditions are met, render the child components");
+  // ("If none of the above conditions are met, render the child components");
   return <Outlet />;
 }
 

@@ -22,7 +22,7 @@ function Register() {
   const { loading: adminLoadin, admin } = useSelector((state) => state.admin);
   const [disable, setDisable] = useState(false);
   const handleRegisterClick = async (e) => {
-    console.log(type);
+    type;
 
     if (type === "Student") {
       try {
@@ -31,24 +31,22 @@ function Register() {
           return;
         }
         const config = { headers: { "Content-Type": "application/json" } };
-        // console.log(email);
+        // (email);
         setDisable(true);
         const { data } = await axios.get(
           "/api/checkPayment",
           { params: { email: email } },
           config
         );
-        // console.log(data);
-        if (data.success === false) {
+        data;
+        if (data.success === true) {
+          await dispatch(studentRegister(name, email, password));
           setDisable(false);
-          toast.error("Please pay to continue signing up");
-          return;
+          if (isStudent) {
+            navigate("/dashboard");
+          }
         }
-        await dispatch(studentRegister(name, email, password));
         setDisable(false);
-        if (isStudent) {
-          navigate("/dashboard");
-        }
       } catch (error) {
         setDisable(false);
         toast.error(error.message);

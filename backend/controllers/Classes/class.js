@@ -14,7 +14,7 @@ const prisma = new PrismaClient();
 exports.getAllTeachersOfSubjectClass = async (req, res, next) => {
   try {
     const { classId, subjectId } = req.params;
-    console.log(classId, subjectId);
+    // (classId, subjectId);
     const allDetails = await prisma.TeacherSubjectClass.findMany({
       where: {
         classId: classId,
@@ -24,7 +24,7 @@ exports.getAllTeachersOfSubjectClass = async (req, res, next) => {
         teacher: true,
       },
     });
-    // console.log(allDetails);
+    // (allDetails);
     const teachers = allDetails
       .filter((detail) => detail.teacher !== null)
       .map((detail) => detail.teacher);
@@ -59,7 +59,7 @@ exports.getAllSubjectsOfClass = async (req, res, next) => {
 exports.getAllVideosClassSubjectTeacher = async (req, res, next) => {
   try {
     const { classId, subjectId, teacherId } = req.params;
-    // console.log("ho", classId, subjectId, teacherId);
+    // ("ho", classId, subjectId, teacherId);
     const allVideos = await prisma.Videos.findMany({
       where: {
         teacherId,
@@ -76,7 +76,7 @@ exports.getAllVideosClassSubjectTeacher = async (req, res, next) => {
       allVideos,
     });
   } catch (error) {
-    console.log(error);
+    error;
     res.status(500).json({
       error,
     });
@@ -129,7 +129,7 @@ exports.viewTest = async (req, res, next) => {
 
     tests.forEach((test) => {
       const startDate = new Date(test.date);
-      console.log(startDate, test.title, test.description, test.duration);
+      // (startDate, test.title, test.description, test.duration);
 
       const endDate = new Date(startDate);
       endDate.setHours(endDate.getHours() + test.duration);
@@ -155,9 +155,9 @@ exports.viewTest = async (req, res, next) => {
 
 exports.getQuestions = async (req, res, next) => {
   try {
-    console.log("first");
+    // ("first");
     const { testId } = req.params;
-    console.log(testId);
+    // (testId);
     if (!testId) {
       return res.status(400).json({
         error: "Invalid testId",
@@ -309,7 +309,7 @@ exports.UploadPdf = async (req, res) => {
 
 exports.uploadVideo = async (req, res, next) => {
   try {
-    console.log("came");
+    // ("came");
     const { name, description, url } = req.body;
     const { classId, subjectId, teacherId } = req.params;
     const uploadLink = await prisma.videos.create({
@@ -332,7 +332,7 @@ exports.uploadVideo = async (req, res, next) => {
       uploadLink,
     });
   } catch (error) {
-    console.log(error);
+    // (error);
     res.status(500).json({ error: "Internal server error." });
   }
 };
@@ -359,7 +359,7 @@ exports.createTest = async (req, res, next) => {
           subject: true,
         },
       });
-      console.log("came");
+
       const questionData = questions.map((q) => ({
         text: q[0],
         marks: q[1],
@@ -410,7 +410,7 @@ exports.allTestStudents = async (req, res, next) => {
 exports.getStudentMarks = async (req, res, next) => {
   try {
     const { studentId } = req.params;
-    console.log(studentId);
+    // (studentId);
     const data = await prisma.Answer.findMany({
       where: {
         studentId: studentId,
@@ -502,7 +502,7 @@ exports.createAnnounce = async (req, res, next) => {
   try {
     const { classId, subjectId, teacherId } = req.params;
     const { heading, content } = req.body;
-    // console.log(heading, content);
+    // (heading, content);
     const announce = await prisma.Announcement.create({
       data: {
         heading,
@@ -529,7 +529,7 @@ exports.createAnnounce = async (req, res, next) => {
 exports.requestTeacher = async (req, res, next) => {
   try {
     const { name, email, password } = req.body;
-    console.log(name, email, password);
+    // (name, email, password);
     const alreadyExist = await prisma.Teacher.findFirst({
       where: {
         email,
@@ -576,7 +576,7 @@ exports.requestTeacher = async (req, res, next) => {
 exports.getAllEnrolledClasses = async (req, res, next) => {
   try {
     const { teacherId } = req.params;
-    console.log(teacherId);
+    // (teacherId);
     const data = await prisma.TeacherSubjectClass.findMany({
       where: {
         teacherId,
@@ -621,7 +621,7 @@ exports.requestForClasses = async (req, res, next) => {
 exports.getPdf = async (req, res, next) => {
   try {
     const { classId, subjectId, teacherId } = req.params;
-    // console.log(classId, subjectId, teacherId);
+    // (classId, subjectId, teacherId);
     const allPdfs = await prisma.Notes.findMany({
       where: {
         classId: classId,
@@ -634,7 +634,7 @@ exports.getPdf = async (req, res, next) => {
       allPdfs,
     });
   } catch (error) {
-    console.log(error);
+    error;
   }
 };
 
@@ -663,12 +663,11 @@ exports.createClass = async (req, res, next) => {
     return next(new errorHandler("Error creating class", 404));
   }
 };
-//delete the confirmed or rejected classes
+
 exports.confirmClasses = async (req, res, next) => {
   try {
     const { teacherId, className, subjectName } = req.body;
 
-    // Check if the class exists before attempting to delete
     const classPending = await prisma.ClassPending.findUnique({
       where: {
         teacherId_className_subjectName: {
@@ -707,7 +706,7 @@ exports.assignClassToTeacher = async (req, res, next) => {
     const { classNames } = req.body;
     const { teacherId } = req.params;
     if (!classNames || !teacherId) {
-      console.log("provide all details");
+      ("provide all details");
       return;
     }
     var allClasses = [];
@@ -743,7 +742,7 @@ exports.assignClassToTeacher = async (req, res, next) => {
         });
         subject = createSubject;
       }
-      console.log(subject);
+      subject;
       // Check if the class is already assigned to the teacher
       const existingAssignment = await prisma.TeacherSubjectClass.findMany({
         where: {
@@ -754,9 +753,7 @@ exports.assignClassToTeacher = async (req, res, next) => {
       });
 
       if (existingAssignment.length > 0) {
-        console.log(
-          `Class ${className} and subject ${className[1]} is already assigned to teacher.`
-        );
+        `Class ${className} and subject ${className[1]} is already assigned to teacher.`;
         continue;
       }
 
@@ -939,7 +936,7 @@ exports.getAllClassDetails = async (req, res, next) => {
       const subjectName = record?.subject?.subjectName;
       const teacherName = record?.teacher?.name;
       uniqueClasses.add(classid);
-      // console.log(uniqueClasses);
+      // (uniqueClasses);
       if (!subjectByClass[classid]) {
         subjectByClass[classid] = new Set();
       }
@@ -962,7 +959,7 @@ exports.getAllClassDetails = async (req, res, next) => {
     for (const sc in classDetails) {
       classDetails[sc] = Array.from(classDetails[sc]);
     }
-    // console.log(uniqueClasses);
+    // (uniqueClasses);
     res.status(200).json({
       uniqueClasses: Array.from(uniqueClasses),
       subjectByClass,
@@ -971,6 +968,6 @@ exports.getAllClassDetails = async (req, res, next) => {
       success: true,
     });
   } catch (error) {
-    console.log(error);
+    error;
   }
 };

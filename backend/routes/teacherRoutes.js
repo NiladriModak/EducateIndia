@@ -11,7 +11,10 @@ const {
   requestForClasses,
 } = require("../controllers/Classes/class");
 const { isTeacher } = require("../middlewires/auth");
-const { teacherLogin } = require("../controllers/LoginSign/userControllers");
+const {
+  teacherLogin,
+  getTeacher,
+} = require("../controllers/LoginSign/userControllers");
 const router = express.Router();
 router
   .route("/classes/:classId/subjects/:subjectId/teachers/:teacherId/uploadPdf")
@@ -40,4 +43,5 @@ router
 
 router.route("/getFullDetails/:teacherId").get(getDetailsOfTeacher);
 router.route("/requestForClasses").post(isTeacher, requestForClasses);
+router.route("/getTeacher").get(getTeacher);
 module.exports = router;

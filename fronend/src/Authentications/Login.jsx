@@ -18,8 +18,6 @@ function Login() {
   const navigate = useNavigate();
   const { loading, error, isStudent } = useSelector((state) => state.student);
   const handleLoginClick = async (e) => {
-    console.log(type);
-
     if (type === "Student") {
       try {
         if (!email || !password) {
@@ -34,7 +32,7 @@ function Login() {
           { params: { email: email } },
           config
         );
-        console.log(data);
+
         if (data.success === false) {
           toast.error("Please pay to continue logging in");
           return;
@@ -65,9 +63,9 @@ function Login() {
           toast.error(data.message);
           return;
         }
-        console.log(data);
+        // console.log(data);
         if (data.success === true) {
-          console.log(data.token);
+          // console.log(data.token);
 
           localStorage.setItem("token", data.token);
           localStorage.setItem("type", "teacher");
@@ -76,7 +74,7 @@ function Login() {
         }
         setDisable(false);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
         setDisable(false);
       }
     } else if (type === "Admin") {
@@ -96,9 +94,9 @@ function Login() {
           toast.error(data.message);
           return;
         }
-        console.log(data);
+        // console.log(data);
         if (data.success === true) {
-          console.log(data.token);
+          // console.log(data.token);
 
           localStorage.setItem("token", data.token);
           localStorage.setItem("type", "admin");
@@ -107,7 +105,7 @@ function Login() {
         }
         setDisable(false);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
         setDisable(false);
       }
     }

@@ -75,17 +75,17 @@ app.use(errorMiddlewire);
 
 // const PORT = "800";
 // app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
+//   T}`);
 // });
 
 // // Route to create a new teacher
 // app.get("/", (req, res) => {
-//   console.log("Server is running");
+//   ("Server is running");
 //   res.send("Server is running");
 // });
 // app.post("/students", async (req, res) => {
 //   try {
-//     console.log("yes");
+//     ("yes");
 //     const { name, email, password } = req.body;
 //     const student = await prisma.Student.create({
 //       data: {
@@ -94,10 +94,10 @@ app.use(errorMiddlewire);
 //         password,
 //       },
 //     });
-//     console.log("no");
+//     ("no");
 //     res.json(student);
 //   } catch (error) {
-//     console.log(error);
+//     (error);
 //     res.status(500).json({ error: "Error creating student" });
 //   }
 // });
@@ -164,7 +164,7 @@ app.use(errorMiddlewire);
 // //         classId: classId,
 // //       },
 // //     });
-// //     // console.log(exists);
+// //     // (exists);
 // //     if (exists.length > 0) {
 // //       res.json({
 // //         message: "already exist",
@@ -231,7 +231,7 @@ app.use(errorMiddlewire);
 // //     const { classNames } = req.body;
 // //     const { teacherId } = req.params;
 // //     if (!classNames || !teacherId) {
-// //       console.log("provide all details");
+// //       ("provide all details");
 // //       return;
 // //     }
 // //     var allClasses = [];
@@ -244,7 +244,7 @@ app.use(errorMiddlewire);
 // //       });
 
 // //       if (!classData) {
-// //         console.log(`Class ${className[0]} not found.`);
+// //         (`Class ${className[0]} not found.`);
 // //         continue;
 // //       }
 
@@ -263,7 +263,7 @@ app.use(errorMiddlewire);
 // //         });
 // //         subject = createSubject;
 // //       }
-// //       console.log(subject);
+// //       (subject);
 // //       // Check if the class is already assigned to the teacher
 // //       const existingAssignment = await prisma.TeacherSubjectClass.findMany({
 // //         where: {
@@ -274,7 +274,7 @@ app.use(errorMiddlewire);
 // //       });
 
 // //       if (existingAssignment.length > 0) {
-// //         console.log(
+// //         (
 // //           `Class ${className} and subject ${className[1]} is already assigned to teacher.`
 // //         );
 // //         continue;
@@ -294,7 +294,7 @@ app.use(errorMiddlewire);
 
 // //     res.json({ allClasses });
 // //   } catch (error) {
-// //     console.log(error);
+// //     (error);
 // //   }
 // // });
 
@@ -314,7 +314,7 @@ app.use(errorMiddlewire);
 // //     const teachers = allDetails.map((singleDetail) => singleDetail.teacher);
 // //     res.json(teachers);
 // //   } catch (error) {
-// //     console.log(error);
+// //     (error);
 // //   }
 // // });
 
@@ -335,7 +335,7 @@ app.use(errorMiddlewire);
 // //     const subjects = uniqueSubjects.map((detail) => detail.subject);
 // //     res.json(subjects);
 // //   } catch (error) {
-// //     console.log(error);
+// //     (error);
 // //     res.status(500).send("Internal Server Error");
 // //   }
 // // });
@@ -377,7 +377,7 @@ app.use(errorMiddlewire);
 // //       });
 // //       res.json(fileData);
 // //     } catch (error) {
-// //       console.log(error);
+// //       (error);
 // //     }
 // //   }
 // // );
@@ -399,7 +399,7 @@ app.use(errorMiddlewire);
 //         allPdfs,
 //       });
 //     } catch (error) {
-//       console.log(error);
+//       (error);
 //     }
 //   }
 // );

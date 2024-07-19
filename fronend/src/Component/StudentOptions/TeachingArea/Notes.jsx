@@ -48,7 +48,7 @@ function Notes() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getNotes(classId, subjectId, teacherId));
-    // console.log("notes--->", notes);
+    // ("notes--->", notes);
   }, [classId, subjectId, teacherId]);
 
   const showPdf = (pdf) => {

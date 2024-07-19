@@ -63,12 +63,12 @@ function EnrolledClassesDetails() {
       );
 
       if (data.success === true) {
-        console.log(data);
+        data;
         toast.success("Request Send Successfully");
       }
     } catch (error) {
       setDisable(false);
-      console.log(error);
+      error;
 
       toast.error("Request not send");
     }
@@ -167,7 +167,7 @@ function EnrolledClassesDetails() {
               alignItems: "center",
             }}
           >
-            {enrolledClasses && console.log(enrolledClasses.data)}
+            {enrolledClasses && sses.data}
             {enrolledClasses &&
             enrolledClasses.data &&
             enrolledClasses.data.length === 0 ? (

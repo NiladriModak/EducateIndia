@@ -13,7 +13,7 @@ function SubjectDiv(props) {
     try {
       navigator(`/classes/${classId}/subjects/${id}/teachers`);
     } catch (error) {
-      console.log(error);
+      error;
     }
   };
 

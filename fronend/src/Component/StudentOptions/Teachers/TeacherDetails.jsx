@@ -12,7 +12,7 @@ function TeacherDetails() {
   //   await dispatch(getTeachers(classId, subjectId));
   // };
   useEffect(() => {
-    console.log(classId, subjectId);
+    classId, subjectId;
     dispatch(getTeachers(classId, subjectId));
   }, [classId, subjectId, dispatch]);
   return (

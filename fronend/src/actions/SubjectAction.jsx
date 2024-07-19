@@ -18,7 +18,7 @@ export const getSubjects = (classId) => async (dispatch) => {
     };
 
     const { data } = await axios.get(`/api/class/${classId}/subjects`, config);
-    console.log(data);
+    data;
     await dispatch({ type: SUCCESS_SUBJECT, payload: data });
   } catch (error) {
     dispatch({

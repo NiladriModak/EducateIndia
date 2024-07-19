@@ -36,13 +36,14 @@ function GiveTest() {
     dispatch(getSingleTest(classId, subjectId, teacherId, testId));
   }, [classId, subjectId, teacherId, testId]);
 
-  const submitTest = () => {
+  const submitTest = async () => {
     const studentId = localStorage.getItem("studentId");
     for (var i = 0; i < allAnswers.length; i++) {
-      console.log(questions.questions[i].marks);
+      questions.questions[i].marks;
       var totalMarks = 0;
+      var fullMarks = 0;
       if (questions && questions.questions[i].correctAnswer === allAnswers[i]) {
-        dispatch(
+        await dispatch(
           createAnswers(
             questions.questions[i].id,
             singleTest.singleTest.id,
@@ -53,7 +54,7 @@ function GiveTest() {
         );
         totalMarks += questions.questions[i].marks;
       } else if (questions) {
-        dispatch(
+        await dispatch(
           createAnswers(
             questions.questions[i].id,
             singleTest.singleTest.id,
@@ -63,8 +64,9 @@ function GiveTest() {
           )
         );
       }
+      fullMarks += questions.questions[i].marks;
     }
-    dispatch(uploadTotalMarks(studentId, testId, totalMarks, fullMarks));
+    await dispatch(uploadTotalMarks(studentId, testId, totalMarks, fullMarks));
     navigator(
       `/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}`
     );
@@ -76,7 +78,7 @@ function GiveTest() {
   useEffect(() => {
     if (singleTest && singleTest.singleTest) {
       const { date, duration } = singleTest.singleTest;
-      // console.log("startTime", new Date(date).getTime());
+      // ", new Date(date).getTime());
 
       // Calculate the end time
       const endTime = new Date(date).getTime() + duration * 60 * 60 * 1000;
