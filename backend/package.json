@@ -27,7 +27,8 @@
   },
   "scripts": {
     "dev": "nodemon app.js",
-    "start": "node app.js"
+    "start": "node app.js",
+    "build": "echo 'Build step not required for Node.js app'"
   },
   "keywords": [],
   "author": "",
