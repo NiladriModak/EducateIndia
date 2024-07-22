@@ -48,7 +48,7 @@ function App() {
     }
   }, []);
   return (
-    <Router basename="https://educate-india-jade.vercel.app/">
+    <Router>
       <ToastContainer
         position="bottom-right"
         autoClose={4000}
