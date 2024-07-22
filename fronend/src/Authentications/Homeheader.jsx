@@ -1,5 +1,6 @@
 import React from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
 function Homeheader() {
   return (
     <div
@@ -16,10 +17,20 @@ function Homeheader() {
     >
       <img style={{ width: "7%" }} src="/logo1.png" alt="Eduacate India" />
       <img style={{ width: "15%" }} src="/logo.png" alt="Educate India" />
-      <h3>Home</h3>
-      <h3>Mission</h3>
-      <h3>Contribute</h3>
-      <h3>About</h3>
+      <Link to="/">
+        <h3>Home</h3>
+      </Link>
+
+      <Link to="/mission">
+        <h3>Mission</h3>
+      </Link>
+
+      <Link to="/about">
+        <h3>About</h3>
+      </Link>
+      {/* <Link to="/contributers">
+        <h3>Contributers</h3>
+      </Link> */}
     </div>
   );
 }

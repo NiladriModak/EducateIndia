@@ -26,6 +26,8 @@ import Library from "./Component/StudentOptions/Library/Library";
 import VerifyTeacher from "./Component/admin/verifyTeacher/VerifyTeacher";
 import AdminDashboard from "./Component/admin/adminDashboard/AdminDashboard";
 import Chatgpt from "./Component/Chatgpt/Chatgpt";
+import Mission from "./Authentications/Mission";
+import About from "./Authentications/About";
 // import EnrolledClasses from "./Component/teacherComponents/EnrolledClasses";
 
 function App() {
@@ -64,6 +66,8 @@ function App() {
       <Routes>
         <Route element={<UnprotectedRoute />}>
           <Route path="/" element={<Home />} />
+          <Route path="/mission" element={<Mission />} />
+          <Route path="/about" element={<About />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/paymentSuccess" element={<PaymentStatus />} />
           <Route path="/studentRegister" element={<Register />} />

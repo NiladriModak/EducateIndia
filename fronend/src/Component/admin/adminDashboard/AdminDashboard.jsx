@@ -76,8 +76,6 @@ function AdminDashboard() {
     width: "500px",
     height: "500px",
     padding: "2vmax",
-    // boxShadow: "1px 1px 1px 1px grey",
-    // overflow: "auto",
     marginBottom: "2rem",
     overflow: "hidden",
     justifyContent: "center",
