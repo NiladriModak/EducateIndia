@@ -167,6 +167,7 @@ function Login() {
         />
         <TextField
           required
+          type="password"
           label="Password"
           onChange={(e) => {
             setPassword(e.target.value);

@@ -154,6 +154,7 @@ function Register() {
             <TextField
               required
               label="Password"
+              type="password"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
