@@ -54,11 +54,7 @@ export const getEnrolledClassesAction = () => async (dispatch) => {
   try {
     dispatch({ type: GET_ENROLLED_CLASSES_REQUEST });
     const token = localStorage.getItem("token");
-    token;
-
     const id = localStorage.getItem("teacherId");
-    "id", id;
-
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,

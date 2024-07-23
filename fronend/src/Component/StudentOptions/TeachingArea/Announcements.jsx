@@ -41,8 +41,6 @@ function Announcements() {
 
   const createNewAnnouncement = async () => {
     try {
-      heading, content;
-      bjectId;
       await dispatch(createAnnouncements(classId, subjectId, heading, content));
     } catch (error) {}
   };

@@ -60,6 +60,7 @@ function Register() {
         setDisable(true);
         dispatch(teacherRegister(name, email, password));
         setDisable(false);
+        navigate("/login");
       } catch (error) {
         setDisable(false);
         toast.error(error.message);
@@ -74,6 +75,7 @@ function Register() {
         await dispatch(registerAdmin(name, email, password));
 
         setDisable(false);
+        navigate("/login");
         if (admin && admin.success === true) {
           toast.success("Registration Successful");
           navigate("/adminDashboard");

@@ -83,7 +83,7 @@ function Home() {
                 variant="outlined"
                 onClick={handleTeacherReg}
               >
-                Teacher Registration
+                Teacher/Admin Registration
               </Button>
             </div>
             <div

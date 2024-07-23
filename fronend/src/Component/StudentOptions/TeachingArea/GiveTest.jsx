@@ -11,9 +11,11 @@ import {
 } from "../../../actions/ClassAction";
 import { Button } from "@mui/material";
 import Loading from "../../Loading/Loading";
+import { toast } from "react-toastify";
 
 function GiveTest() {
   const { loading, questions, error } = useSelector((state) => state.questions);
+  const [disable, setDisable] = useState(false);
   const navigator = useNavigate();
   const {
     loading: singleTestLoading,
@@ -37,39 +39,51 @@ function GiveTest() {
   }, [classId, subjectId, teacherId, testId]);
 
   const submitTest = async () => {
-    const studentId = localStorage.getItem("studentId");
-    for (var i = 0; i < allAnswers.length; i++) {
-      questions.questions[i].marks;
-      var totalMarks = 0;
-      var fullMarks = 0;
-      if (questions && questions.questions[i].correctAnswer === allAnswers[i]) {
-        await dispatch(
-          createAnswers(
-            questions.questions[i].id,
-            singleTest.singleTest.id,
-            studentId,
-            allAnswers[i],
-            questions.questions[i].marks
-          )
-        );
-        totalMarks += questions.questions[i].marks;
-      } else if (questions) {
-        await dispatch(
-          createAnswers(
-            questions.questions[i].id,
-            singleTest.singleTest.id,
-            studentId,
-            allAnswers[i],
-            0
-          )
-        );
+    setDisable(true);
+    try {
+      const studentId = localStorage.getItem("studentId");
+      for (var i = 0; i < allAnswers.length; i++) {
+        questions.questions[i].marks;
+        var totalMarks = 0;
+        var fullMarks = 0;
+        if (
+          questions &&
+          questions.questions[i].correctAnswer === allAnswers[i]
+        ) {
+          await dispatch(
+            createAnswers(
+              questions.questions[i].id,
+              singleTest.singleTest.id,
+              studentId,
+              allAnswers[i],
+              questions.questions[i].marks
+            )
+          );
+          totalMarks += questions.questions[i].marks;
+        } else if (questions) {
+          await dispatch(
+            createAnswers(
+              questions.questions[i].id,
+              singleTest.singleTest.id,
+              studentId,
+              allAnswers[i],
+              0
+            )
+          );
+        }
+        fullMarks += questions.questions[i].marks;
       }
-      fullMarks += questions.questions[i].marks;
+      await dispatch(
+        uploadTotalMarks(studentId, testId, totalMarks, fullMarks)
+      );
+      setDisable(false);
+      navigator(
+        `/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}`
+      );
+    } catch (error) {
+      setDisable(false);
+      toast.error("Not submitted");
     }
-    await dispatch(uploadTotalMarks(studentId, testId, totalMarks, fullMarks));
-    navigator(
-      `/classes/${classId}/subjects/${subjectId}/teachers/${teacherId}`
-    );
   };
 
   // Timer state
@@ -140,6 +154,7 @@ function GiveTest() {
             </p>
             <h2>Time Remaining: {formatTime(timeLeft)}</h2>
             <Button
+              disabled={disable}
               variant="contained"
               sx={{ backgroundColor: "black" }}
               onClick={submitTest}

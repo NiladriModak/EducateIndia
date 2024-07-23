@@ -14,14 +14,22 @@ import {
 } from "@mui/material";
 import { toast } from "react-toastify";
 import axios from "../../../axios";
+
 function EnrolledClassesDetails() {
   const { loading, enrolledClasses } = useSelector(
     (state) => state.enrolledClasses
   );
+  const dispatch = useDispatch();
+
   const allback = async () => {
     await dispatch(getEnrolledClassesAction());
   };
+
   const [open, setOpen] = React.useState(false);
+  const [className, setClassName] = useState("");
+  const [subjectName, setSubjectName] = useState("");
+  const [disable, setDisable] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -29,19 +37,16 @@ function EnrolledClassesDetails() {
   const handleClose = () => {
     setOpen(false);
   };
-  const [className, setClassName] = useState("");
-  const [subjectName, setSubjectName] = useState("");
-  const [disable, setDisable] = useState(false);
-  const dispatch = useDispatch();
+
   const createNewRequest = async () => {
     try {
       if (!className || !subjectName) {
-        toast.warning("enter all details");
+        toast.warning("Enter all details");
         return;
       }
       const teacherId = localStorage.getItem("teacherId");
-      if (teacherId === undefined) {
-        toast.error("No teachers id found");
+      if (!teacherId) {
+        toast.error("No teacher's id found");
         return;
       }
       setDisable(true);
@@ -62,24 +67,24 @@ function EnrolledClassesDetails() {
         config
       );
 
-      if (data.success === true) {
-        data;
-        toast.success("Request Send Successfully");
+      if (data.success) {
+        toast.success("Request sent successfully");
+        allback(); // Refresh the enrolled classes after a new request is sent
       }
     } catch (error) {
       setDisable(false);
-      error;
-
-      toast.error("Request not send");
+      toast.error("Request not sent");
     }
   };
+
   useEffect(() => {
     if (
-      enrolledClasses === undefined ||
       !enrolledClasses ||
-      Object.keys(enrolledClasses).length === 0
-    )
+      !enrolledClasses.data ||
+      enrolledClasses.data.length === 0
+    ) {
       allback();
+    }
   }, [enrolledClasses, dispatch]);
 
   return (
@@ -93,7 +98,6 @@ function EnrolledClassesDetails() {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            // height: "100vh",
           }}
         >
           <h1
@@ -142,7 +146,6 @@ function EnrolledClassesDetails() {
                 Enter Subject Name
               </DialogContentText>
               <TextField
-                autoFocus
                 required
                 margin="dense"
                 id="subjectName"
@@ -152,10 +155,11 @@ function EnrolledClassesDetails() {
                 variant="standard"
               />
             </DialogContent>
-
             <DialogActions>
               <Button onClick={handleClose}>Cancel</Button>
-              <Button type="submit">Upload</Button>
+              <Button type="submit" disabled={disable}>
+                Upload
+              </Button>
             </DialogActions>
           </Dialog>
           <div
@@ -167,11 +171,10 @@ function EnrolledClassesDetails() {
               alignItems: "center",
             }}
           >
-            {enrolledClasses && sses.data}
             {enrolledClasses &&
             enrolledClasses.data &&
             enrolledClasses.data.length === 0 ? (
-              <h2>You are not enrolled to any class</h2>
+              <h2>You are not enrolled in any class</h2>
             ) : (
               enrolledClasses &&
               enrolledClasses.data &&

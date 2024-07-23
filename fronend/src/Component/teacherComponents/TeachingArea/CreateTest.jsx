@@ -46,7 +46,7 @@ function CreateTest() {
   }, [allquestions]);
 
   const handleSend = () => {
-    if (question && marks && alloptions.length && correctAnswer) {
+    if (question && marks && alloptions.length && correctAnswer >= 0) {
       question, marks, alloptions, correctAnswer;
 
       setAllquestions((prevQuestions) => [

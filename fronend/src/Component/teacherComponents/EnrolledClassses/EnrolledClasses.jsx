@@ -7,7 +7,7 @@ import EnrolledClassesDetails from "./EnrolledClassesDetails";
 import Layout from "../../Layout";
 function EnrolledClasses() {
   return (
-    <Layout className="MainDiv">
+    <Layout>
       <EnrolledClassesDetails />
     </Layout>
   );
