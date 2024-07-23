@@ -4,13 +4,15 @@ import { getBooks } from "../../../actions/LibraryAction";
 import Loading from "../../Loading/Loading";
 import Layout from "../../Layout";
 import LibraryBox from "./LibraryBox";
-
+import { allBooks } from "./libraryBooks";
 function Library() {
   const dispatch = useDispatch();
-  const { allBooks, loading } = useSelector((state) => state.allBooks);
-  useEffect(() => {
-    dispatch(getBooks());
-  }, [dispatch]);
+  // const { allBooks, loading } = useSelector((state) => state.allBooks);
+  const loading = false;
+
+  // useEffect(() => {
+  //   dispatch(getBooks());
+  // }, [dispatch]);
 
   return (
     <Layout>
