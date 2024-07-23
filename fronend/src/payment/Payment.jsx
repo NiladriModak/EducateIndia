@@ -20,10 +20,10 @@ function Payment() {
     ("came");
     const {
       data: { key },
-    } = await axios.get("http://localhost/api/getRazorKey");
+    } = await axios.get("https://educateindia.onrender.com/api/getRazorKey");
     const {
       data: { order },
-    } = await axios.post("http://localhost/api/payment");
+    } = await axios.post("https://educateindia.onrender.com/api/payment");
     var options = {
       key, // Enter the Key ID generated from the Dashboard
       amount: "2000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -44,7 +44,8 @@ function Payment() {
           email,
           name,
         });
-        window.location.href = "http://localhost:5173/studentRegister";
+        window.location.href =
+          "https://educate-india-jade.vercel.app/studentRegister";
         // (data);
       },
       prefill: {

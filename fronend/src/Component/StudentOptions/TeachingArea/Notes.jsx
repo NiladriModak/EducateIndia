@@ -52,7 +52,7 @@ function Notes() {
   }, [classId, subjectId, teacherId]);
 
   const showPdf = (pdf) => {
-    window.open(`http://localhost/files/${pdf}`, "_blank");
+    window.open(`https://educateindia.onrender.com/files/${pdf}`, "_blank");
   };
 
   return (

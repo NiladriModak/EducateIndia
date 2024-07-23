@@ -139,6 +139,14 @@ function Register() {
             className="RegisterBox"
           >
             <h2>Sign Up</h2>
+            <p>For guest to Login</p>
+            <p>
+              Student : Username=student@gmail.com Password=student@gmail.com
+            </p>
+            <p>
+              Teacher : Username=teacher@gmail.com Password=teacher@gmail.com
+            </p>
+            <p>Admin : Username=admin@gmail.com Password=admin@gmail.com</p>
             <TextField
               required
               label="Name"
