@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "../axios";
+import axios from "axios";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -20,10 +20,10 @@ function Payment() {
     ("came");
     const {
       data: { key },
-    } = await axios.get("https://educateindia.onrender.com/api/getRazorKey");
+    } = await axios.get("http://localhost/api/getRazorKey");
     const {
       data: { order },
-    } = await axios.post("https://educateindia.onrender.com/api/payment");
+    } = await axios.post("http://localhost/api/payment");
     var options = {
       key, // Enter the Key ID generated from the Dashboard
       amount: "2000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -37,15 +37,17 @@ function Payment() {
         const razorpay_payment_id = response.razorpay_payment_id;
         const razorpay_order_id = response.razorpay_order_id;
         const razorpay_signature = response.razorpay_signature;
-        const { data } = await axios.post("/api/paymentVerification", {
-          razorpay_order_id,
-          razorpay_payment_id,
-          razorpay_signature,
-          email,
-          name,
-        });
-        window.location.href =
-          "https://educate-india-jade.vercel.app/studentRegister";
+        const { data } = await axios.post(
+          "http://localhost/api/paymentVerification",
+          {
+            razorpay_order_id,
+            razorpay_payment_id,
+            razorpay_signature,
+            email,
+            name,
+          }
+        );
+        window.location.href = "http://localhost:5173/studentRegister";
         // (data);
       },
       prefill: {
@@ -91,6 +93,9 @@ function Payment() {
         }}
       >
         <h1>Payment Form</h1>
+        <p style={{ padding: "1vmax", color: "red" }}>
+          Note : Available only in local host as the Razorpay is in test mode
+        </p>
         <form
           style={{
             width: "40vw",
