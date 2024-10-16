@@ -78,11 +78,7 @@ function EnrolledClassesDetails() {
   };
 
   useEffect(() => {
-    if (
-      !enrolledClasses ||
-      !enrolledClasses.data ||
-      enrolledClasses.data.length === 0
-    ) {
+    if (!enrolledClasses || !enrolledClasses.data) {
       allback();
     }
   }, [enrolledClasses, dispatch]);
